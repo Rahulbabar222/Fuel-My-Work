@@ -5,13 +5,15 @@ import { useRouter } from 'next/navigation'
 
 const Dashboard = () => {
     const { data: session } = useSession();
-        if(!session){
-            const router= useRouter()
-            router.push("/login")
-        }
-  return (
-    <div>Dashboard</div>
-  )
+    const router = useRouter();
+
+    if (!session) {
+        router.push("/login");
+    }
+    
+    return (
+        <div>Dashboard</div>
+    )
 }
 
 export default Dashboard

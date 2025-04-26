@@ -2,6 +2,11 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+	•	“Join the community of Igniters helping creators fuel their journey.”
+	•	“Become an Igniter and spark someone’s success today!”
+	•	“Special thanks to our amazing Igniters who keep the fire burning.”
+	•	“Igniters get exclusive behind-the-scenes access and perks.”
+
 First, run the development server:
 
 ```bash

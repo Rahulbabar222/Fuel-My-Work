@@ -13,7 +13,7 @@ const Login = () => {
 
     return (
         <div className='flex justify-center items-center h-screen'>
-            <div className='sm:w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
+            <div className='w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
                 <img src="/logo.png" alt="" width={"50"} />
                 <h1 className='text-3xl font-bold'>Welcome Back</h1>
                 <input type="text" placeholder='Email Address' className='px-2 py-2 bg-zinc-300 w-full rounded-md text-black' />
@@ -42,7 +42,7 @@ const Login = () => {
                 </button>
 
                 <button type="button" className="min-w-[210px] w-fit text-white bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 me-2 text-white" fill="white" viewBox="0 0 50 50">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 me-2 text-white" fill="white" viewBox="0 0 50 50">
                         <path d="M 5.9199219 6 L 20.582031 27.375 L 6.2304688 44 L 9.4101562 44 L 21.986328 29.421875 L 31.986328 44 L 44 44 L 28.681641 21.669922 L 42.199219 6 L 39.029297 6 L 27.275391 19.617188 L 17.933594 6 L 5.9199219 6 z M 9.7167969 8 L 16.880859 8 L 40.203125 42 L 33.039062 42 L 9.7167969 8 z" fill="white"></path>
                     </svg>
                     Sign in with X
