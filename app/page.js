@@ -1,7 +1,11 @@
+"use client"
 import FeatureCarousel from "@/components/FeatureCarousel";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function Home() {
+    
+        const { data: session } = useSession();
     return (
         <div className="">
             <div className="flex flex-col justify-center items-center gap-5 p-10 m-10 bg-indigo-950/30 ">

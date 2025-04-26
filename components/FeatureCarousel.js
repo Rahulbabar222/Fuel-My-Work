@@ -4,19 +4,19 @@ import React, { useState, useEffect } from 'react';
 const features = [
     {
       text: "Give your audience an easy way to say thanks.",
-      image: "/image-1.png"
+      image: "/feature-1.png"
     },
     {
       text: "Start a membership for your biggest fans.",
-      image: "/image-2.png"
+      image: "/feature-2.png"
     },
     {
       text: "No sign-up needed for supporters",
-      image: "/image-3.png"
+      image: "/feature-3.png"
     },
     {
       text: "Instant payment notifications",
-      image: "/image-4.png"
+      image: "/feature-4.png"
     }
   ];
 
