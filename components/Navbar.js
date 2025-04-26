@@ -36,13 +36,13 @@ const Navbar = () => {
                     )}
 
                     {session ? (
-                        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" onClick={() => setDashboardDropdown(!dashboardDropdown)} onBlur={() => setTimeout(() => setDashboardDropdown(false), 100)} 
+                        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" onClick={() => setDashboardDropdown(!dashboardDropdown)} onBlur={() => setTimeout(() => setDashboardDropdown(false), 100)}
                             className='relative text-white hover:bg-white border border-indigo-500 hover:border-white hover:text-black  rounded-lg px-5 py-2.5 w-fit mx-2 font-semibold flex items-center'
                             type="button">
                             <span>Welcome</span>
                             <span className='hidden sm:block'>, {session.user.email}</span>
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                            <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                             </svg>
 
                             {/* <!-- Dropdown menu --> */}
@@ -63,11 +63,11 @@ const Navbar = () => {
                                             Settings
                                         </Link>
                                     </li>
-                                    <li>
-                                        <button onClick={() => signOut({callbackUrl:"/"})} className="w-full block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                            Sign out
-                                        </button>
+
+                                    <li onClick={() => signOut({ callbackUrl: "/" })} className="w-full block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Sign out
                                     </li>
+
                                 </ul>
                             </div>
 
