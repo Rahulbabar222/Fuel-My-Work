@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { User } from "@/models/User";
 import { Payment } from "@/models/Payment";
+import { connectDB } from "@/db/mongoose";
 
 export const authOptions = {
     providers: [
@@ -16,7 +17,7 @@ export const authOptions = {
         async signIn({ user, account, profile, email, credentials }) {
             if (account.provider === "github") { 
                 // Connect to DB
-                await mongoose.connect("mongodb://localhost:27017/FuelmyworkDB");
+                await connectDB();
 
                 const currentUser = await User.findOne({ email: user.email });
                 if (!currentUser) {
