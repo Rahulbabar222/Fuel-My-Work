@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Username = ({ params }) => {
+
     return (
         <>
             <div className='flex flex-col items-center'>
@@ -85,7 +86,7 @@ const Username = ({ params }) => {
                 <div className=' w-full md:w-2/3 lg:w-1/3 h-fit m-5 bg-indigo-950/60 p-5 rounded-lg' >
                     <h3 className='text-xl font-bold'>About {decodeURIComponent(params.username)}</h3>
                     <p className='my-3 '>
-                        Indoor Cycle & Strength At-Home Workout Programs                   
+                        Indoor Cycle & Strength At-Home Workout Programs
                     </p>
                     <div className='cover rounded-md w-full'>
                         <iframe
@@ -169,13 +170,24 @@ const Username = ({ params }) => {
                         </li>
                     </ul>
 
-                    <button className="text-indigo-950 bg-white/90 border hover:bg-white  rounded-full px-5 py-2.5 w-full m-2 font-semibold ">
+                    <button className="text-indigo-950 bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full m-2 font-semibold ">
                         Show More
                     </button>
                 </div>
                 <div className='w-full md:w-2/3 lg:w-1/3 h-fit m-5 rounded-lg' >
                     <div className='w-full h-fit bg-indigo-950/60 p-5 rounded-lg'>
-                        <h2 className='text-2xl font-bold'>Fuel {decodeURIComponent(params.username)}'s work </h2>
+                        <div className=' flex gap-2 items-center group'>
+                            <h2 className='text-2xl font-bold'>Fuel {decodeURIComponent(params.username)}'s work </h2>
+                            <button className='relative'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#ffffff" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
+                                <path d="M10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 9.39815 13.8837 9.76913 13.6831 10.0808C13.0854 11.0097 12 11.8954 12 13V13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M11.992 17H12.001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div className='text-sm p-2 rounded-xl border-2 border-indigo-500 hidden group-hover:block group-focus:block w-[200px] h-fit bg-white text-black absolute -left-25 sm:left-0   bottom-6'>
+                            It's a friendly metaphor, not real fuel. Each 'fuel' is $5, and you can buy as many as you like.
+                            </div>
+                            </button>
+                        </div>
                         <div className='flex items-center gap-5 my-3 p-4 border-2 border-indigo-500 rounded-lg bg-indigo-950'>
                             <div className='w-[50px]'>
                                 <img src="/logo.png" alt="" />
@@ -186,8 +198,11 @@ const Username = ({ params }) => {
                             <div className='w-[50px] h-[50px] bg-indigo-950 text-white border-2 border-white rounded-full flex items-center justify-center'>5</div>
                             <input className='w-[50px] h-[50px] text-center border-2 border-white rounded-xl' value={10} type="text" name="" id="" />
                         </div>
-                        <input className='w-full p-3 text-lg bg-amber-50 text-black rounded-lg mb-3 ' placeholder='Name' type="text" name="" id="" />
-                        <input className='w-full h-[100px] p-3 text-lg bg-amber-50 text-black rounded-lg mb-3 ' placeholder='Say something nice...' type="text" name="" id="" />
+                        <input className='w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg mb-3 ' placeholder='Name' type="text" name="" id="" />
+                        <input className='w-full h-[100px] p-3 text-lg bg-gray-300 text-gray-700 rounded-lg mb-3 ' placeholder='Say something nice...' type="text" name="" id="" />
+                        <button className="text-black bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full m-2 font-semibold flex justify-center gap-2">
+                            <span>Fuel</span><span>$25</span>
+                        </button>
                     </div>
                     <div>
 

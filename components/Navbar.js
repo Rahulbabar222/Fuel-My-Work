@@ -1,11 +1,16 @@
 "use client"
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSession, signOut } from "next-auth/react"
 
 const Navbar = () => {
     const { data: session } = useSession();
     const [dashboardDropdown, setDashboardDropdown] = useState(false)
+
+    useEffect(() => {
+      console.log(session)
+    }, [session])
+    
 
     return (
         <nav className='h-[80px] flex justify-between items-center bg-indigo-950/30'>
@@ -40,7 +45,7 @@ const Navbar = () => {
                             className='relative text-white hover:bg-white border border-indigo-500 hover:border-white hover:text-black  rounded-lg px-5 py-2.5 w-fit mx-2 font-semibold flex items-center'
                             type="button">
                             <span>Welcome</span>
-                            <span className='hidden sm:block'>, {session.user.email}</span>
+                            <span className='hidden sm:block'>, {session.user.name?session.user.name:session.user.email}</span>
                             <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                             </svg>
@@ -54,13 +59,13 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                            Your Page
+                                        <Link href={`/${session.user.name}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            My Page
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                            Settings
+                                        <Link href="/myaccount" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            My Account
                                         </Link>
                                     </li>
 
