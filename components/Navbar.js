@@ -34,7 +34,7 @@ const Navbar = () => {
                         ""
                     ) : (
 
-                        <Link href={"/login"}>
+                        <Link href={"/auth/login"}>
                             <li className='text-white hover:bg-white border border-indigo-500 hover:border-white hover:text-black  rounded-lg px-5 py-2.5 w-fit mx-2 font-semibold'>
                                 Log in</li>
                         </Link>
@@ -54,7 +54,7 @@ const Navbar = () => {
                             <div id="dropdown" className={`z-10 ${dashboardDropdown ? "block" : "hidden"} absolute right-0 top-13 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700`}>
                                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                                     <li>
-                                        <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <Link href="/account/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                             Dashboard
                                         </Link>
                                     </li>
@@ -64,7 +64,7 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/myaccount" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <Link href="/account/myaccount" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                             My Account
                                         </Link>
                                     </li>

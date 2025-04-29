@@ -4,17 +4,16 @@ import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 
 const Dashboard = () => {
-    const { data: session } = useSession();
+    const { data: session,status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
-      console.log(session)
-    }, [session])
-    
-
-    if (!session) {
-        router.push("/login");
-    }
+        if (status === "loading") return;
+        if (!session) {
+            router.push("/auth/login");
+        }
+        console.log(session)
+    }, [session,status])
 
     return (
         <div>Dashboard</div>

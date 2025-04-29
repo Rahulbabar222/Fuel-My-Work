@@ -1,24 +1,109 @@
 "use client"
-import React from 'react'
-import {signIn, useSession } from "next-auth/react"
+import React, { useState ,useEffect} from 'react'
+import { signIn, useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const Login = () => {
+    const [loginform, setLoginform] = useState({email:"",password:""})
+    const [emailexist, setEmailexist] = useState()
+    const router = useRouter()
 
     const { data: session } = useSession();
-    if(session){
-        const router= useRouter()
-        router.push("/dashboard")
+    useEffect(() => {
+        if (session) {
+          router.push("/account/dashboard");
+        }
+      }, [session]);
+
+    const handleChange = (e) => {
+        setLoginform({...loginform,[e.target.name]:e.target.value})
     }
 
-    return (
-        <div className='flex justify-center items-center h-screen'>
-            <div className='w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
-                <img src="/logo.png" alt="" width={"50"} />
-                <h1 className='text-3xl font-bold'>Welcome Back</h1>
-                <input type="text" placeholder='Email Address' className='px-2 py-2 bg-zinc-300 w-full rounded-md text-black' />
+    const handleContinue = async () => {
+        try {
+            const res = await fetch("/api/account/check-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(loginform),
+            });
 
-                <button className='w-1/2 py-2 bg-amber-300 hover:bg-amber-400 text-black rounded-full '>Continue</button>
+            const data = await res.json();
+
+            if (res.ok && data.exists) {
+                setEmailexist(true);
+            } else {
+                setEmailexist(false);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong.");
+        }
+    }
+
+    const handleLogin = async () => {
+        try {
+            const res = await fetch("/api/account/check-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(loginform),
+            });
+    
+            const data = await res.json();
+    
+            if (res.ok && data.exists) {
+               router.push("/account/dashboard")
+            } else {
+                // Handle error from server
+                alert(data.error || "Login failed.");
+            }
+    
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong.");
+        }
+    };
+
+    return (
+        <div className='flex justify-center items-center h-screen relative'>
+            <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
+                <Link href={"/"}><img src="/logo.png" alt="" width={"50"} /></Link>
+                <h1 className='text-3xl font-bold'>Welcome Back</h1>
+                <input onChange={handleChange} type="email" name="email" value={loginform.email} placeholder='Email Address' className='px-2 py-2 bg-zinc-300 w-full rounded-md text-black' />
+                {emailexist===true &&
+                <input onChange={handleChange} type="password" name="password" value={loginform.password} placeholder='Password' className='px-2 py-2 bg-zinc-300 w-full rounded-md text-black' />}
+                {/* continue button */}
+
+                {emailexist?(
+                    <>
+                <button
+                    disabled={!loginform.email || !loginform.password}
+                    onClick={() => handleLogin()}
+                    className={`w-1/2 py-2 font-semibold text-center text-black rounded-full ${loginform.email &&loginform.password ? "bg-amber-300 hover:bg-amber-400" : "bg-gray-300 cursor-not-allowed"
+                        }`}>
+                    Login
+                </button>
+                <Link href={"/auth/forgotpassword"} className='underline'>Forgot password?</Link>
+                </>
+                ):(
+                <button
+                    disabled={!loginform.email}
+                    onClick={() => handleContinue()}
+                    className={`w-1/2 py-2 font-semibold text-center text-black rounded-full ${loginform.email ? "bg-amber-300 hover:bg-amber-400" : "bg-gray-300 cursor-not-allowed"
+                        }`}>
+                    Continue
+                </button>
+
+                )}
+                
+                
+                <p>
+                    {emailexist === false && (
+                        <Link href="/signup" className="text-blue-500 underline">
+                            Account not found. Click here to sign up.
+                        </Link>
+                    )}
+                </p>
 
                 <p>or</p>
 
@@ -48,8 +133,8 @@ const Login = () => {
                     Sign in with X
                 </button>
 
-                <button onClick={()=>{signIn("github",{ callbackUrl: "/" })}} type="button"
-                    className= "min-w-[210px] w-fit text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2">
+                <button onClick={() => { signIn("github", { callbackUrl: "/account/dashboard" }) }} type="button"
+                    className="min-w-[210px] w-fit text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2">
                     <svg className="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                         viewBox="0 0 20 20">
                         <path fillRule="evenodd"

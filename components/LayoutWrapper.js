@@ -6,7 +6,7 @@ import Footer from './Footer';
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
-  const noLayoutRoutes = ['/login', '/signin'];
+  const noLayoutRoutes = ['/auth/login', '/auth/signup','/auth/forgotpassword'];
 
   const hideLayout = noLayoutRoutes.includes(pathname);
 

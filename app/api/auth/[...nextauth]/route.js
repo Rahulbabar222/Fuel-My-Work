@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { User } from "@/models/User";
@@ -24,7 +23,7 @@ export const authOptions = {
                     const newUser = new User({
                         email: user.email,
                         username: user.email.split("@")[0],
-
+                        name:user.name
                     });
                     await newUser.save();
                     
@@ -35,7 +34,14 @@ export const authOptions = {
 
         async session({ session, token, user }) {
             const dbUSer= await User.findOne({email:session.user.email})
-            session.user.name=dbUSer.username
+            session.user.id=dbUSer._id;
+            session.user.name=dbUSer.name;
+            session.user.username=dbUSer.username;
+            session.user.profileimage=dbUSer.profileimage;
+            session.user.coverimage=dbUSer.coverimage;
+            session.user.createdAt=dbUSer.createdAt;
+            session.user.updatedAt=dbUSer.updatedAt;
+            
             return session;
         },
     },
