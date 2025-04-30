@@ -96,7 +96,7 @@ const Login = () => {
                 
                 <p>
                     {emailexist === false && (
-                        <Link href="/signup" className="text-blue-500 underline">
+                        <Link href="/auth/signup" className="text-blue-500 underline">
                             Account not found. Click here to sign up.
                         </Link>
                     )}

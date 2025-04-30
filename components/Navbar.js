@@ -59,7 +59,7 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={`/${session.user.name}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <Link href={`/${session.user.username}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                             My Page
                                         </Link>
                                     </li>
@@ -78,7 +78,7 @@ const Navbar = () => {
 
                         </button>
                     ) : (
-                        < Link href={"/signup"}>
+                        < Link href={"/auth/signup"}>
                             <li className='text-indigo-950 bg-white border hover:scale-105  rounded-lg px-5 py-2.5 w-fit mx-2 font-semibold '>
                                 Sign up
                             </li>

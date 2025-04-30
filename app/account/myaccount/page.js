@@ -34,7 +34,7 @@ const MyAccount = () => {
 
     const handleSave = async () => {
         try {
-            const res = await fetch("/api/account", {
+            const res = await fetch("/api/account/update", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(accountdetails),
@@ -44,6 +44,7 @@ const MyAccount = () => {
 
             if (res.ok) {
                 alert("Profile updated!");
+                router.push("/account/dashboard");
             } else {
                 alert(data.error || "Failed to update profile.");
             }
