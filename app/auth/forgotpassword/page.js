@@ -1,10 +1,12 @@
 "use client"
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
     const [resetform, setResetform] = useState({ email: "", password: "", confirmpassword: "" })
     const [emailexist, setEmailexist] = useState()
+    const router=useRouter()
 
     const handleChange = (e) => {
         setResetform({ ...resetform, [e.target.name]: e.target.value })
@@ -44,6 +46,7 @@ const page = () => {
 
             if (res.ok) {
                 alert("Password updated!");
+                router.push("/auth/login")
             } else {
                 alert(data.error || "Failed to update password.");
             }

@@ -1,8 +1,10 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "@/models/User";
 import { Payment } from "@/models/Payment";
 import { connectDB } from "@/db/mongoose";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
     providers: [
@@ -10,11 +12,39 @@ export const authOptions = {
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET,
         }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+          }),
+        CredentialsProvider({
+            name: "Credentials",
+            credentials: {
+                email: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" },
+            },
+            async authorize(credentials) {
+                //for credential db logic ahppens here, 
+                // where as for Auth option in callbacks section.
+                await connectDB();
+                const user = await User.findOne({ email: credentials.email });
+                if (!user) throw new Error("No user found");
+                if (user.password !== credentials.password) throw new Error("Invalid credentials");
+
+                return {
+                    id: user._id.toString(),
+                    name: user.name,
+                    email: user.email,
+                    username: user.username,
+                    profileimage: user.profileimage,
+                    coverimage:user.coverimage,
+                };
+            }
+        })
     ],
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-            if (account.provider === "github") { 
+            if  (account.provider === "github" || account.provider === "google") {
                 // Connect to DB
                 await connectDB();
 
@@ -23,25 +53,28 @@ export const authOptions = {
                     const newUser = new User({
                         email: user.email,
                         username: user.email.split("@")[0],
-                        name:user.name
+                        name: user.name
                     });
                     await newUser.save();
-                    
+
                 }
             }
-            return true; 
+            if (account.provider === "credentials") {
+                console.log("User logged in using credentials:", user.email);
+            }
+            return true;
         },
 
         async session({ session, token, user }) {
-            const dbUSer= await User.findOne({email:session.user.email})
-            session.user.id=dbUSer._id;
-            session.user.name=dbUSer.name;
-            session.user.username=dbUSer.username;
-            session.user.profileimage=dbUSer.profileimage;
-            session.user.coverimage=dbUSer.coverimage;
-            session.user.createdAt=dbUSer.createdAt;
-            session.user.updatedAt=dbUSer.updatedAt;
-            
+            const dbUSer = await User.findOne({ email: session.user.email })
+            session.user.id = dbUSer._id;
+            session.user.name = dbUSer.name;
+            session.user.username = dbUSer.username;
+            session.user.profileimage = dbUSer.profileimage;
+            session.user.coverimage = dbUSer.coverimage;
+            session.user.createdAt = dbUSer.createdAt;
+            session.user.updatedAt = dbUSer.updatedAt;
+
             return session;
         },
     },
