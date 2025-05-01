@@ -4,16 +4,14 @@ import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 
 
-const MyAccount = () => {
+const MyAccount = ({setActiveComponent}) => {
     const [accountdetails, setAccountdetails] = useState({ name: "", username: "", email: "", profileimage: "", coverimage: "" })
     const { data: session,status,update } = useSession();
     const router = useRouter();
 
     useEffect(() => {
         if (status === "loading") return;
-        if (!session) {
-            router.push("/auth/login");
-        } else {
+        
             setAccountdetails({
                 name: session.user.name || "",
                 username: session.user.username || "",
@@ -23,7 +21,7 @@ const MyAccount = () => {
                 updatedAt:session.user.updatedAt,
                 id:session.user.id
             });
-        }
+
         console.log(`Account details-${accountdetails}`)
     }, [session,status]);
 
@@ -45,7 +43,7 @@ const MyAccount = () => {
             if (res.ok) {
                 update()
                 alert("Profile updated!");
-                router.push("/account/dashboard");
+                setActiveComponent("home")
             } else {
                 alert(data.error || "Failed to update profile.");
             }
@@ -56,8 +54,7 @@ const MyAccount = () => {
     };
 
     return (
-        <div className='flex justify-center items-center w-screen '>
-            <div className='p-10 w-1/2'>
+            <div className='p-10 w-1/2 h-fit'>
                 <h1 className='text-2xl font-bold px-3'>My Account</h1>
                 <div className='py-3 px-3'>
                     <h3 className='font-semibold text-lg'>Edit profile</h3>
@@ -84,7 +81,6 @@ const MyAccount = () => {
                     </button>
                 </div>
             </div>
-        </div>
     )
 }
 

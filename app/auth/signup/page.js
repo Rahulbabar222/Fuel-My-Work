@@ -67,7 +67,10 @@ const Login = () => {
         <div className='flex justify-center items-center h-screen relative'>
             <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
                 <Link href={"/"}><img src="/logo.png" alt="" width={"50"} /></Link>
+                <div className='flex flex-col items-center'>
                 <h1 className='text-3xl font-bold'>Welcome</h1>
+                <h2 className='text-2xl font-bold'>Sign up</h2>
+                </div>
                 <input onChange={handleChange} type="email" name="email" value={signupform.email} placeholder='Email Address' className='px-2 py-2 bg-zinc-300 w-full rounded-md text-black' />
                 {emailexist && <Link href={"/auth/login"} className='text-sm text-red-400 underline'>Email Already exist, click here to login</Link>}
 

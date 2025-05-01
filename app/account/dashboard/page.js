@@ -1,10 +1,17 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
+import MyAccount from '@/components/myDashboard/MyAccount'
+import Sidebar from '@/components/myDashboard/Sidebar'
+import Home from '@/components/myDashboard/Home'
+import PaymentSetting from '@/components/myDashboard/PaymentSetting'
+import Payout from '@/components/myDashboard/Payout'
 
 const Dashboard = () => {
-    const { data: session,status } = useSession();
+    const [activeComponent, setActiveComponent] = useState("home")
+
+    const { data: session, status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
@@ -13,10 +20,34 @@ const Dashboard = () => {
             router.push("/auth/login");
         }
         console.log(session)
-    }, [session,status])
+    }, [session, status])
+
+
+    const renderComponent = () => {
+        switch (activeComponent) {
+            case 'home':
+                return <Home/>;
+            case 'myAccount':
+                return <MyAccount setActiveComponent={setActiveComponent} />;
+            case 'paymentSetting':
+                return <PaymentSetting/>;
+            case 'payout':
+                return <Payout/>;
+            default:
+                return null;
+        }
+    };
 
     return (
-        <div>Dashboard</div>
+        <div style={{ height: "calc(100vh - 160px)" }} className='w-full flex '>
+            <div className='bg-indigo-950/30 my-5 ml-5 w-full sm:w-1/5 p-3'>
+                <Sidebar activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
+            </div>
+
+            <div className='bg-indigo-950/30 my-5 mx-5 w-full sm:4/5 flex justify-center overflow-y-auto'>
+                {renderComponent()}
+            </div>
+        </div>
     )
 }
 

@@ -10,7 +10,6 @@ const Navbar = () => {
     useEffect(() => {
       console.log(session)
     }, [session])
-    
 
     return (
         <nav className='h-[80px] flex justify-between items-center bg-indigo-950/30'>
@@ -61,11 +60,6 @@ const Navbar = () => {
                                     <li>
                                         <Link href={`/${session.user.username}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                             My Page
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/account/myaccount" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                            My Account
                                         </Link>
                                     </li>
 
