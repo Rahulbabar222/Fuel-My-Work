@@ -15,7 +15,7 @@ export const authOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
-          }),
+        }),
         CredentialsProvider({
             name: "Credentials",
             credentials: {
@@ -23,7 +23,7 @@ export const authOptions = {
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
-                //for credential db logic ahppens here, 
+                //for credential db logic happens here, 
                 // where as for Auth option in callbacks section.
                 await connectDB();
                 const user = await User.findOne({ email: credentials.email });
@@ -36,7 +36,7 @@ export const authOptions = {
                     email: user.email,
                     username: user.username,
                     profileimage: user.profileimage,
-                    coverimage:user.coverimage,
+                    coverimage: user.coverimage,
                 };
             }
         })
@@ -44,15 +44,24 @@ export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-            if  (account.provider === "github" || account.provider === "google") {
+            if (account.provider === "github" || account.provider === "google") {
                 // Connect to DB
                 await connectDB();
 
                 const currentUser = await User.findOne({ email: user.email });
                 if (!currentUser) {
+                    const baseUsername = user.email.split("@")[0];
+                    let username = baseUsername;
+                    let counter = 1;
+
+                    // Ensure unique username
+                    while (await User.findOne({ username })) {
+                        username = `${baseUsername}${counter}`;
+                        counter++;
+                    }
                     const newUser = new User({
                         email: user.email,
-                        username: user.email.split("@")[0],
+                        username,
                         name: user.name
                     });
                     await newUser.save();

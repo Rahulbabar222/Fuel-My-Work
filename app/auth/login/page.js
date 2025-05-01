@@ -93,7 +93,6 @@ const Login = () => {
 
                 )}
                 
-                
                 <p>
                     {emailexist === false && (
                         <Link href="/auth/signup" className="text-blue-500 underline">

@@ -53,6 +53,7 @@ const Login = () => {
 
             if (res.ok) {
                 alert("Signup Successful!");
+                router.push("/auth/login");
             } else {
                 alert(data.error || "Failed to Signup.");
             }

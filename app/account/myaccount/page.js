@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 const MyAccount = () => {
     const [accountdetails, setAccountdetails] = useState({ name: "", username: "", email: "", profileimage: "", coverimage: "" })
-    const { data: session,status } = useSession();
+    const { data: session,status,update } = useSession();
     const router = useRouter();
 
     useEffect(() => {
@@ -43,6 +43,7 @@ const MyAccount = () => {
             const data = await res.json();
 
             if (res.ok) {
+                update()
                 alert("Profile updated!");
                 router.push("/account/dashboard");
             } else {
