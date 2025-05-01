@@ -7,10 +7,6 @@ const Navbar = () => {
     const { data: session } = useSession();
     const [dashboardDropdown, setDashboardDropdown] = useState(false)
 
-    useEffect(() => {
-      console.log(session)
-    }, [session])
-
     return (
         <nav className='h-[80px] flex justify-between items-center bg-indigo-950/30'>
             <div className='w-1/3 m-3'>

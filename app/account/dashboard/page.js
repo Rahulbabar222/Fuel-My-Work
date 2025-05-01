@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
-import MyAccount from '@/components/myDashboard/MyAccount'
+import AccountSetting from '@/components/myDashboard/AccountSetting'
 import Sidebar from '@/components/myDashboard/Sidebar'
 import Home from '@/components/myDashboard/Home'
-import PaymentSetting from '@/components/myDashboard/PaymentSetting'
+import MyProfile from '@/components/myDashboard/MyProfile'
 import Payout from '@/components/myDashboard/Payout'
 
 const Dashboard = () => {
@@ -27,10 +27,10 @@ const Dashboard = () => {
         switch (activeComponent) {
             case 'home':
                 return <Home/>;
-            case 'myAccount':
-                return <MyAccount setActiveComponent={setActiveComponent} />;
-            case 'paymentSetting':
-                return <PaymentSetting/>;
+            case 'accountSetting':
+                return <AccountSetting setActiveComponent={setActiveComponent} />;
+            case 'myProfile':
+                return <MyProfile/>;
             case 'payout':
                 return <Payout/>;
             default:

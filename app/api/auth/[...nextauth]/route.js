@@ -35,8 +35,6 @@ export const authOptions = {
                     name: user.name,
                     email: user.email,
                     username: user.username,
-                    profileimage: user.profileimage,
-                    coverimage: user.coverimage,
                 };
             }
         })
@@ -79,8 +77,6 @@ export const authOptions = {
             session.user.id = dbUSer._id;
             session.user.name = dbUSer.name;
             session.user.username = dbUSer.username;
-            session.user.profileimage = dbUSer.profileimage;
-            session.user.coverimage = dbUSer.coverimage;
             session.user.createdAt = dbUSer.createdAt;
             session.user.updatedAt = dbUSer.updatedAt;
 

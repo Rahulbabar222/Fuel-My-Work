@@ -8,7 +8,7 @@ export const PUT = async (req) => {
         await connectDB();
 
         const body = await req.json();
-        const { name, username, email, profileimage, coverimage, id } = body;
+        const { name, username, email, id } = body;
 
         const accountDetails = await User.findById(id);
 
@@ -31,8 +31,6 @@ export const PUT = async (req) => {
         accountDetails.name = name;
         accountDetails.username = username;
         accountDetails.email = email;
-        accountDetails.profileimage = profileimage;
-        accountDetails.coverimage = coverimage;
 
         await accountDetails.save();
 
