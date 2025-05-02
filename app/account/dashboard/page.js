@@ -30,7 +30,7 @@ const Dashboard = () => {
             case 'accountSetting':
                 return <AccountSetting setActiveComponent={setActiveComponent} />;
             case 'myProfile':
-                return <MyProfile/>;
+                return <MyProfile setActiveComponent={setActiveComponent}/>;
             case 'payout':
                 return <Payout/>;
             default:

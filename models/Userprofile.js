@@ -1,10 +1,8 @@
 import mongoose, { model } from "mongoose";
 
 const UserprofileSchema = new mongoose.Schema({
-    name: { type: String },
-    username: { type: String},
-    profileImage: { type: String },
-    coverImage: { type: String },
+    profileImage: { type: String,default:"/profile.png" },
+    coverImage: { type: String,default:"/cover.png" },
     about:{type:String},
     fuelCost:{type:Number, default:1},
     introLink:{type:String},

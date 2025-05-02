@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSession } from "next-auth/react"
 
-const Payment = ({ name, username }) => {
+const Payment = ({ name, username,fuelCost }) => {
     const { data: session } = useSession();
-    const [fuelCost] = useState(10)//needed to be taken from user from backend.
     const [paymentform, setPaymentform] = useState({fuel:1,amount:0,name:"anonymous",fromUsername:"anonymous",toUsername:username,fromUseremail:"",message:"",})
     const [finalAmount,setFinalAmount]=useState(paymentform.fuel*fuelCost)
 
