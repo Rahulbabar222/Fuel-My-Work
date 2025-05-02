@@ -6,9 +6,9 @@ const MyProfile = ({setActiveComponent}) => {
 
     const [profileForm, setProfileForm] = useState({
         id:"",profileImage:"",
-        coverImage:"",about:"",fuelCost:"",
-        introLink:"",instagram:"",youtube:"",
-        github:"",website:""
+        coverImage:"",title:"",about:"",fuelCost:"",
+        introLink:"",website:"",behance:"",discord:"",github:"",facebook:"",instagram:"",linkedin:"",
+        pinterest:"",telegram:"",youtube:"",snapchat:"",reddit:"",x:"",whatsapp:""
     })
 
     useEffect(() => {
@@ -31,13 +31,24 @@ const MyProfile = ({setActiveComponent}) => {
                             id: data._id || "",
                             profileImage: data.profileImage || "/profile.png",
                             coverImage: data.coverImage || "/cover.png",
+                            title: data.title || "",
                             about: data.about || "",
                             fuelCost: data.fuelCost || "",
                             introLink: data.introLink || "",
-                            instagram: data.instagram || "",
-                            youtube: data.youtube || "",
+                            website: data.website || "",
+                            behance: data.behance || "",
+                            discord: data.discord || "",
                             github: data.github || "",
-                            website: data.website || ""
+                            facebook: data.facebook || "",
+                            instagram: data.instagram || "",
+                            linkedin: data.linkedin || "",
+                            pinterest: data.pinterest || "",
+                            telegram: data.telegram || "",
+                            youtube: data.youtube || "",
+                            snapchat: data.snapchat || "",
+                            reddit: data.reddit || "",
+                            x: data.x || "",
+                            whatsapp: data.whatsapp || "",
                         });
                     }
                 } catch (err) {
@@ -94,13 +105,15 @@ const MyProfile = ({setActiveComponent}) => {
         <div className='p-10 w-1/2 h-fit'>
             <h1 className='text-2xl font-bold p-3 '>Edit Profile</h1>
             <div className='p-10  bg-indigo-950/60 rounded-lg'>
-
                 <label className='text-lg' htmlFor="coverImage">Cover Image Link</label>
                 <input onChange={handleChange} value={profileForm.coverImage} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='' type="text" id="coverImage" />
 
                 <label className='text-lg' htmlFor="profileImage">Profile Image Link</label>
                 <input onChange={handleChange} value={profileForm.profileImage} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='' type="text" id="profileImage" />
 
+                <label className='text-lg' htmlFor="title">Title</label>
+                <input onChange={handleChange} value={profileForm.title} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='For about section...' type="text" id="title" />
+                
                 <label className='text-lg' htmlFor="name">About</label>
                 <textarea onChange={handleChange} value={profileForm.about}
                     id="about"
@@ -118,17 +131,41 @@ const MyProfile = ({setActiveComponent}) => {
 
                 <h3 className='text-lg font-bold my-3 '>Link your Social Accounts</h3>
 
-                <label className='text-lg' htmlFor="instagram">Instagram</label>
-                <input onChange={handleChange} value={profileForm.instagram} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="instagram" />
-
-                <label className='text-lg' htmlFor="youtube">Youtube</label>
-                <input onChange={handleChange} value={profileForm.youtube} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="youtube" />
+                <label className='text-lg' htmlFor="website">Website</label>
+                <input onChange={handleChange} value={profileForm.website} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="website" />
+                
+                <label className='text-lg' htmlFor="discord">Discord</label>
+                <input onChange={handleChange} value={profileForm.discord} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="discord" />
 
                 <label className='text-lg' htmlFor="github">Github</label>
                 <input onChange={handleChange} value={profileForm.github} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="github" />
+                
+                <label className='text-lg' htmlFor="facebook">Facebook</label>
+                <input onChange={handleChange} value={profileForm.facebook} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="facebook" />
+                
+                <label className='text-lg' htmlFor="linkedin">Linkedin</label>
+                <input onChange={handleChange} value={profileForm.linkedin} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="linkedin" />
 
-                <label className='text-lg' htmlFor="website">Website</label>
-                <input onChange={handleChange} value={profileForm.website} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="website" />
+                <label className='text-lg' htmlFor="pinterest">Pinterest</label>
+                <input onChange={handleChange} value={profileForm.pinterest} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="pinterest" />
+                
+                <label className='text-lg' htmlFor="telegram">Telegram</label>
+                <input onChange={handleChange} value={profileForm.telegram} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="telegram" />
+
+                <label className='text-lg' htmlFor="youtube">Youtube</label>
+                <input onChange={handleChange} value={profileForm.youtube} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="youtube" />
+                
+                <label className='text-lg' htmlFor="snapchat">Snapchat</label>
+                <input onChange={handleChange} value={profileForm.snapchat} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="snapchat" />
+                
+                <label className='text-lg' htmlFor="reddit">Reddit</label>
+                <input onChange={handleChange} value={profileForm.reddit} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="reddit" />
+                
+                <label className='text-lg' htmlFor="x">{"X (Twitter)"}</label>
+                <input onChange={handleChange} value={profileForm.x} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="x" />
+                
+                <label className='text-lg' htmlFor="whatsapp">Whatsapp</label>
+                <input onChange={handleChange} value={profileForm.whatsapp} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="whatsapp" />
 
                 <button onClick={()=>handleSave()}
                     className="disabled:bg-zinc-500 text-black bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full mx-2 my-5 font-semibold flex justify-center gap-2">
