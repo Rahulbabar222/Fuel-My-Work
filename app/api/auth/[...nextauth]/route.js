@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "@/models/User";
-import { Payment } from "@/models/Payment";
+import { Payment } from "@/models/Paymentreceipt";
 import { connectDB } from "@/db/mongoose";
 import GoogleProvider from "next-auth/providers/google";
 

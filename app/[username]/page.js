@@ -5,6 +5,7 @@ import React, { use, useEffect, useState } from 'react'
 
 const Username = ({ params }) => {
     const { username } = use(params);
+    const [igniters, setIgniters] = useState({})
     const [pageform, setPageform] = useState({})
     const [profileexist, setProfileexist] = useState(null)
 
@@ -30,6 +31,27 @@ const Username = ({ params }) => {
             }
         };
         fetchProfile();
+
+        const fetchIgniters = async () => {
+            try {
+                const res = await fetch(`/api/profile/igniters/${username}`, {
+                    method: "GET",
+                });
+
+                if (!res.ok) {
+                    alert("No donation made yet")
+                    return;
+                }
+
+                const data = await res.json();
+                setIgniters(data);
+                
+                console.log(`Igniters-${igniters}`)
+            } catch (err) {
+                console.error("Error fetching igniters:", err);
+            }
+        };
+        fetchIgniters();
     }, [username]);
     return (
         <>
@@ -98,7 +120,7 @@ const Username = ({ params }) => {
 
                             <p className='my-3 '>{pageform.about}</p>
                             <hr className="border-t border-gray-300" />
-                            <h3 className='text-xl font-bold my-3'>Recent Igniters</h3>
+                            <h3 onClick={()=>console.log(igniters)} className='text-xl font-bold my-3'>Recent Igniters</h3>
                             <ul >
                                 <li className='flex items-center gap-3 mb-5'>
                                     <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
@@ -174,10 +196,11 @@ const Username = ({ params }) => {
                         </div>
                         <div className='w-full md:w-2/3 lg:w-1/3 h-fit m-5 rounded-lg' >
                             <Payment
-                                name={pageform.name ? pageform.name : pageform.username}
                                 username={pageform.username}
-                                fuelCost={pageform.fuelCost} />
+                                fuelCost={pageform.fuelCost}
+                                id={pageform.id} />
                             <div>
+
 
                             </div>
 
