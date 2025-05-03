@@ -5,7 +5,7 @@ import React, { use, useEffect, useState } from 'react'
 
 const Username = ({ params }) => {
     const { username } = use(params);
-    const [igniters, setIgniters] = useState({})
+    const [igniters, setIgniters] = useState([])
     const [pageform, setPageform] = useState({})
     const [profileexist, setProfileexist] = useState(null)
 
@@ -44,8 +44,8 @@ const Username = ({ params }) => {
                 }
 
                 const data = await res.json();
-                setIgniters(data);
-                
+                setIgniters(data.igniters);//data obtained is object and need to extract array to map
+
                 console.log(`Igniters-${igniters}`)
             } catch (err) {
                 console.error("Error fetching igniters:", err);
@@ -82,20 +82,20 @@ const Username = ({ params }) => {
                         <div className='flex flex-wrap justify-center gap-3 w-1/2 sm:w-fit'>
                             {/* SocialLinks  */}
                             <SocialLink
-                            website={pageform.website}
-                            behance={pageform.behance}
-                            discord={pageform.discord}
-                            github={pageform.github}
-                            facebook={pageform.facebook}
-                            instagram={pageform.instagram}
-                            linkedin={pageform.linkedin}
-                            pinterest={pageform.pinterest}
-                            telegram={pageform.telegram}
-                            youtube={pageform.youtube}
-                            snapchat={pageform.snapchat}
-                            reddit={pageform.reddit}
-                            x={pageform.x}
-                            whatsapp={pageform.whatsapp}
+                                website={pageform.website}
+                                behance={pageform.behance}
+                                discord={pageform.discord}
+                                github={pageform.github}
+                                facebook={pageform.facebook}
+                                instagram={pageform.instagram}
+                                linkedin={pageform.linkedin}
+                                pinterest={pageform.pinterest}
+                                telegram={pageform.telegram}
+                                youtube={pageform.youtube}
+                                snapchat={pageform.snapchat}
+                                reddit={pageform.reddit}
+                                x={pageform.x}
+                                whatsapp={pageform.whatsapp}
                             />
                         </div>
 
@@ -120,74 +120,22 @@ const Username = ({ params }) => {
 
                             <p className='my-3 '>{pageform.about}</p>
                             <hr className="border-t border-gray-300" />
-                            <h3 onClick={()=>console.log(igniters)} className='text-xl font-bold my-3'>Recent Igniters</h3>
+                            <h3 className='text-xl font-bold my-3'>Recent Igniters</h3>
                             <ul >
-                                <li className='flex items-center gap-3 mb-5'>
-                                    <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
-                                        <img className='object-cover rounded-full' src="/profile/image-5.png" alt="" />
-                                    </div>
-                                    <div className='w-full'>
-                                        <p><span className='font-bold'>Wendy Charles</span> fueled your work.</p>
-                                        <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, distinctio.</p>
-                                    </div>
-                                </li>
-
-                                <li className='flex items-center gap-3 mb-5'>
-                                    <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full'>
-                                        <img className='object-cover rounded-full' src="/profile/image-4.png" alt="" />
-                                    </div>
-                                    <div className='w-full'>
-                                        <p><span className='font-bold'>Wendy Charles</span> fueled your work.</p>
-                                        <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, distinctio.</p>
-                                    </div>
-                                </li>
-
-                                <li className='flex items-center gap-3 mb-5'>
-                                    <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full'>
-                                        <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
-                                    </div>
-                                    <div className='w-full'>
-                                        <p><span className='font-bold'>Wendy Charles</span> fueled your work.</p>
-                                    </div>
-                                </li>
-
-                                <li className='flex items-center gap-3 mb-5'>
-                                    <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full'>
-                                        <img className='object-cover rounded-full' src="/profile/image-3.png" alt="" />
-                                    </div>
-                                    <div className='w-full'>
-                                        <p><span className='font-bold'>Wendy Charles</span> fueled your work.</p>
-                                        <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, distinctio.</p>
-                                    </div>
-                                </li>
-
-                                <li className='flex items-center gap-3 mb-5'>
-                                    <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full'>
-                                        <img className='object-cover rounded-full' src="/profile/image-2.png" alt="" />
-                                    </div>
-                                    <div className='w-full'>
-                                        <p><span className='font-bold'>Wendy Charles</span> fueled your work.</p>
-                                    </div>
-                                </li>
-
-                                <li className='flex items-center gap-3 mb-5'>
-                                    <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full'>
-                                        <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
-                                    </div>
-                                    <div className='w-full'>
-                                        <p><span className='font-bold'>Wendy Charles</span> fueled your work.</p>
-                                        <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>Lorem ipsum dolor sit.</p>
-                                    </div>
-                                </li>
-
-                                <li className='flex items-center gap-3 mb-5'>
-                                    <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full'>
-                                        <img className='object-cover rounded-full' src="/profile/image-1.png" alt="" />
-                                    </div>
-                                    <div className='w-full'>
-                                        <p><span className='font-bold'>Wendy Charles</span> fueled your work.</p>
-                                    </div>
-                                </li>
+                                {igniters && igniters.length > 0 ? (
+                                    igniters.map(igniter => (
+                                        <li key={igniter.paidAt} className='flex items-center gap-3 mb-5'>
+                                            <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
+                                                <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                            </div>
+                                            <div className='w-full'>
+                                                <p><span className='font-bold'>{igniter.senderName}</span> fueled your work.</p>
+                                                {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
+                                            </div>
+                                        </li>
+                                    ))) : (
+                                    <li className='text-lg py-2'>No Igniters🔥 yet — be the first to fuel their journey!</li>
+                                )}
                             </ul>
 
                             <button className="text-indigo-950 bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full m-2 font-semibold ">
