@@ -3,6 +3,7 @@ import React, { useState ,useEffect} from 'react'
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { toast, ToastContainer } from 'react-toastify'
 
 const Login = () => {
     const [signupform, setSignupform] = useState({email:"",password:"",confirmpassword:""})
@@ -37,7 +38,7 @@ const Login = () => {
             }
         } catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            toast("Something went wrong.");
         }
     }
 
@@ -52,19 +53,20 @@ const Login = () => {
             const data = await res.json();
 
             if (res.ok) {
-                alert("Signup Successful!");
+                toast("Signup Successful!");
                 router.push("/auth/login");
             } else {
-                alert(data.error || "Failed to Signup.");
+                toast(data.error || "Failed to Signup.");
             }
         } catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            toast("Something went wrong.");
         }
     };
 
     return (
         <div className='flex justify-center items-center h-screen relative'>
+            <ToastContainer/>
             <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
                 <Link href={"/"}><img src="/logo.png" alt="" width={"50"} /></Link>
                 <div className='flex flex-col items-center'>

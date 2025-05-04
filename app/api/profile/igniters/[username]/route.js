@@ -19,7 +19,8 @@ export const GET = async (req, { params }) => {
 
         const igniters = await SucessfulDonation.find(
             { toUser: username },
-            { senderName: 1, amount: 1,currency:1, message: 1, paidAt: 1, _id: 0 } 
+            { senderName: 1, amount: 1,currency:1, message: 1,fromUsername:1,
+                fromUseremail:1, paidAt: 1, _id: 0 } 
           );
         console.log(igniters)
 

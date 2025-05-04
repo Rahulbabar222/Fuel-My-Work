@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSession } from "next-auth/react"
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const Payment = ({username, fuelCost,id }) => {
     const { data: session,update } = useSession();
@@ -25,10 +27,9 @@ const Payment = ({username, fuelCost,id }) => {
             const orderData = await res.json();
 
             if (!orderData.id) {
-                alert("Fueling failed, please try again later.");
+                toast("Fueling failed, please try again later.");
                 return;
             }
-            console.log(orderData);
             const options = {
                 key:"rzp_test_vf5xYHRBFkOIvR",
                 amount: orderData.amount,
@@ -58,8 +59,8 @@ const Payment = ({username, fuelCost,id }) => {
                     const verifyData = await verifyRes.json();
                 
                     if (verifyData.success) {
-                        alert("Payment verified successfully!");
                         window.location.reload();
+                        alert("Payment verified successfully! Thank you for your Support.");
                     } else {
                         alert("Payment verification failed.");
                         window.location.reload();
@@ -81,12 +82,12 @@ const Payment = ({username, fuelCost,id }) => {
             const rzp = new window.Razorpay(options);
             rzp.on('payment.failed', function (response) {
                 console.error("Payment failed:", response.error);
-                alert("Payment failed: " + response.error.description);
+                toast("Payment failed: " + response.error.description);
             });
             rzp.open();
         } catch (err) {
             console.error("Payment initiation failed", err);
-            alert("Something went wrong - Fueling failed, please try again later.");
+            toast("Something went wrong - Fueling failed, please try again later.");
         }
     };
 

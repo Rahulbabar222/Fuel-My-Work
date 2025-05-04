@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSession } from "next-auth/react"
 import Link from 'next/link'
+import {toast } from 'react-toastify';
 
 const AccountSetting = ({setActiveComponent}) => {
     const [accountdetails, setAccountdetails] = useState({ name: "", username: "", email: "",})
@@ -41,14 +42,14 @@ const AccountSetting = ({setActiveComponent}) => {
 
             if (res.ok) {
                 update()
-                alert("Profile updated!");
+                toast("Account Setting updated!");
                 setActiveComponent("home")
             } else {
-                alert(data.error || "Failed to update profile.");
+                toast(data.error || "Failed to update Account.");
             }
         } catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            toast("Something went wrong.");
         }
     };
 
@@ -65,19 +66,19 @@ const AccountSetting = ({setActiveComponent}) => {
             const data = await res.json();
 
             if (res.ok) {
-                alert("Password updated!");
+                toast("Password updated!");
             } else {
-                alert(data.error || "Failed to update password.");
+                toast(data.error || "Failed to update password.");
             }
         } catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            toast("Something went wrong.");
         }
 
     }
 
     return (
-            <div className='p-10 w-1/2 h-fit'>
+            <div className='py-10 sm:px-10 lg:px-25 w-full xl:w-1/2 xl:px-0 h-fit'>
                 <h1 className='text-2xl font-bold px-3 '>Account Setting</h1>
                 <div className='px-3 text-lg font-semibold my-2 flex gap-5'>
                     <h2 onClick={()=>setActive("general")} className={`${active==="general"?"text-white": "text-zinc-400"} cursor-pointer`}>General Setting</h2>

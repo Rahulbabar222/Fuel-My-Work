@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useSession, signOut } from "next-auth/react"
+import { ToastContainer } from 'react-toastify'
 
 const Navbar = () => {
     const { data: session } = useSession();

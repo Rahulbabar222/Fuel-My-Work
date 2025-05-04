@@ -2,12 +2,15 @@
 import Payment from '@/components/myPage/PaymentSection';
 import SocialLink from '@/components/myPage/SocialLink';
 import React, { use, useEffect, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const Username = ({ params }) => {
     const { username } = use(params);
     const [igniters, setIgniters] = useState([])
     const [pageform, setPageform] = useState({})
     const [profileexist, setProfileexist] = useState(null)
+    
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -24,9 +27,8 @@ const Username = ({ params }) => {
                 const data = await res.json();
                 setPageform(data);
                 setProfileexist(true);
-                console.log(pageform)
             } catch (err) {
-                console.error("Error fetching profile:", err);
+                toast("Error fetching profile:", err);
                 setProfileexist(false);
             }
         };
@@ -39,14 +41,12 @@ const Username = ({ params }) => {
                 });
 
                 if (!res.ok) {
-                    alert("No donation made yet")
                     return;
                 }
 
                 const data = await res.json();
                 setIgniters(data.igniters);//data obtained is object and need to extract array to map
 
-                console.log(`Igniters-${igniters}`)
             } catch (err) {
                 console.error("Error fetching igniters:", err);
             }
@@ -66,6 +66,7 @@ const Username = ({ params }) => {
             {/* profilepage */}
             {profileexist === true &&
                 <div>
+                    <ToastContainer/>
                     <div className='flex flex-col items-center'>
                         <div className='cover w-full '>
                             <img className='object-cover w-full max-h-[400px]' src={pageform.coverImage} alt="" />

@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { toast, ToastContainer } from 'react-toastify'
 
 const page = () => {
     const [resetform, setResetform] = useState({ email: "", password: "", confirmpassword: "" })
@@ -45,19 +46,20 @@ const page = () => {
             const data = await res.json();
 
             if (res.ok) {
-                alert("Password updated!");
-                router.push("/auth/login")
+                toast("Password updated!");
+                router.push("/auth/login");
             } else {
-                alert(data.error || "Failed to update password.");
+                toast(data.error || "Failed to update password.");
             }
         } catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            toast("Something went wrong.");
         }
     }
     return (
-
+        
         <div className='flex justify-center items-center h-screen relative'>
+            <ToastContainer/>
             <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
                 <Link href={"/"}><img src="/logo.png" alt="" width={"50"} /></Link>
                 <h1 className='text-2xl font-bold'>Reset password</h1>

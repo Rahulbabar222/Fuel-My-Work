@@ -3,6 +3,8 @@ import React, { useState ,useEffect} from 'react'
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { toast, ToastContainer } from 'react-toastify'
+
 
 const Login = () => {
     const [loginform, setLoginform] = useState({email:"",password:""})
@@ -37,7 +39,7 @@ const Login = () => {
             }
         } catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            toast("Something went wrong.");
         }
     }
 
@@ -52,17 +54,18 @@ const Login = () => {
             if (res.ok) {
                 router.push("/account/dashboard");
             } else {
-                alert("Invalid email or password");
+                toast("Invalid email or password");
             }
     
         } catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            toast("Something went wrong.");
         }
     };
 
     return (
         <div className='flex justify-center items-center h-screen relative'>
+            <ToastContainer/>
             <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
                 <Link href={"/"}><img src="/logo.png" alt="" width={"50"} /></Link>
                 <h1 className='text-3xl font-bold'>Welcome Back</h1>

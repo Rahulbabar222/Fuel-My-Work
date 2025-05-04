@@ -1,5 +1,6 @@
 import React, { useState ,useEffect} from 'react'
 import { useSession } from "next-auth/react"
+import { toast } from 'react-toastify';
 
 const MyProfile = ({setActiveComponent}) => {
     const { data: session } = useSession();
@@ -15,7 +16,7 @@ const MyProfile = ({setActiveComponent}) => {
         const initForm = async () => {
             const savedForm = JSON.parse(localStorage.getItem("profileForm"));
     
-            if (savedForm.id) {
+            if (savedForm?.id) {
                 setProfileForm(savedForm);
             } else if (session?.user?.id) {
                 try {
@@ -87,22 +88,22 @@ const MyProfile = ({setActiveComponent}) => {
             const data= await res.json();
 
             if(res.ok){
-                alert ("Profile Updated");
+                toast("Profile Updated");
                 localStorage.removeItem("profileForm");
                 setActiveComponent("home")
 
             }else{
-                alert(data.error)
+                toast(data.error)
             }
         }catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            toast("Something went wrong.");
         }
     
     }
 
     return (
-        <div className='p-10 w-1/2 h-fit'>
+        <div className='py-10 sm:px-10 lg:px-25 w-full xl:w-1/2 xl:px-0  h-fit'>
             <h1 className='text-2xl font-bold p-3 '>Edit Profile</h1>
             <div className='p-10  bg-indigo-950/60 rounded-lg'>
                 <label className='text-lg' htmlFor="coverImage">Cover Image Link</label>
@@ -167,7 +168,7 @@ const MyProfile = ({setActiveComponent}) => {
                 <label className='text-lg' htmlFor="whatsapp">Whatsapp</label>
                 <input onChange={handleChange} value={profileForm.whatsapp} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="whatsapp" />
 
-                <button onClick={()=>handleSave()}
+                <button onClick={()=>{handleSave()}}
                     className="disabled:bg-zinc-500 text-black bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full mx-2 my-5 font-semibold flex justify-center gap-2">
                     <span>Save</span>
                 </button>
