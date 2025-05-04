@@ -90,12 +90,12 @@ const Home = () => {
                     </div>
 
                     <div className='mb-5 py-5 sm:px-10 lg:px-25 w-full xl:w-2/3 xl:px-0 h-fit bg-indigo-950/40 rounded-xl'>
-                        {igniters ? (
+                        {igniters.length > 0 ? (
                             <div className='w-full h-[500px]'>
                                 <ul className='px-5' >
                                     <li className='text-lg font-semibold'>Total {igniters.length} Igniters have fueled your work.</li>
                                     <hr className='my-4 border-zinc-700' />
-                                    {igniters && igniters.length > 0 ? (
+                                    {igniters && igniters.length > 0 &&
                                         igniters.map(igniter => (
                                             <li key={igniter.paidAt} className='flex items-center gap-3 mb-7'>
                                                 <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
@@ -118,13 +118,11 @@ const Home = () => {
                                                     </div>
                                                 </div>
                                             </li>
-                                        ))) : (
-                                        <li className='text-lg py-2'>No Igniters🔥 yet — be the first to fuel their journey!</li>
-                                    )}
+                                        ))}
                                 </ul>
                             </div>
                         ) : (
-                            <div className='w-full h-[300px] flex flex-col items-center justify-center gap-5'>
+                            <div className='w-full h-[200px] flex flex-col items-center justify-center gap-5'>
                                 <p className='text-5xl'>🔥</p>
                                 <h3 className='text-lg font-medium'>You dont have any igniters yet</h3>
                                 <h3 className='text-gray-300'>Share your page with your audience to get started.</h3>
