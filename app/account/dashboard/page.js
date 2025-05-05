@@ -20,8 +20,11 @@ const Dashboard = () => {
         if (!session) {
             router.push("/auth/login");
         }
-        console.log(session)
-    }, [session, status])
+    }, [session, status,router])
+
+    if (status === "loading" || !session) {
+        return null;
+      }
 
 
     const renderComponent = () => {
