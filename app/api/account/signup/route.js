@@ -1,5 +1,6 @@
 import { connectDB } from "@/db/mongoose";
 import { User } from "@/models/User";
+import { SendOnboardingEmail } from "@/resend/Onboarding";
 
 
 //Updating Account details.
@@ -32,6 +33,8 @@ export const POST = async (req) => {
             password: password
         });
         await newUser.save();
+
+        SendOnboardingEmail(email,username);
 
         return new Response(JSON.stringify({ message: "Signup Successful" }), { status: 200 });
     } catch (error) {

@@ -1,7 +1,6 @@
 import { connectDB } from "@/db/mongoose";
 import { User } from "@/models/User";
 
-
 //Reseting Password
 export const PUT = async (req) => {
     try {
@@ -20,8 +19,8 @@ export const PUT = async (req) => {
     
         await accountDetails.save();
 
-    
         return new Response(JSON.stringify({ message: "Password Rest Successful" }), { status: 200 });
+
     } catch (error) {
         console.error("Reset error:", error);
         return new Response(JSON.stringify({ error: "Failed to Rest Password" }), { status: 500 });
