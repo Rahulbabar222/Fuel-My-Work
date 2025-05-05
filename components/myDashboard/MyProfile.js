@@ -126,7 +126,7 @@ const MyProfile = ({setActiveComponent}) => {
                 <input onChange={handleChange} value={profileForm.introLink} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='Youtube video link...' type="text" id="introLink" />
 
                 <label className='text-lg' htmlFor="fuelCost">Fuel Cost</label>
-                <input onChange={handleChange} value={profileForm.fuelCost} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='Enter cost a single fuel...' type="number" id="fuelCost" />
+                <input onChange={handleChange} value={profileForm.fuelCost} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='Enter cost a single fuel, minimum ₹100...' type="number" id="fuelCost" />
 
                 <hr className="border-t border-gray-400 my-4" />
 
@@ -143,6 +143,9 @@ const MyProfile = ({setActiveComponent}) => {
                 
                 <label className='text-lg' htmlFor="facebook">Facebook</label>
                 <input onChange={handleChange} value={profileForm.facebook} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="facebook" />
+                
+                <label className='text-lg' htmlFor="instagram">Instagram</label>
+                <input onChange={handleChange} value={profileForm.instagram} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="instagram" />
                 
                 <label className='text-lg' htmlFor="linkedin">Linkedin</label>
                 <input onChange={handleChange} value={profileForm.linkedin} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg text-start ' placeholder='link' type="text" id="linkedin" />

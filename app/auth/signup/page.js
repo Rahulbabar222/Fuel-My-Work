@@ -9,6 +9,8 @@ import Image from 'next/image'
 const Signuppage = () => {
     const [signupform, setSignupform] = useState({email:"",password:"",confirmpassword:""})
     const [emailexist, setEmailexist] = useState()
+    const [loading, setLoading] = useState(false);
+    
     const router = useRouter()
 
     const { data: session } = useSession();
@@ -24,6 +26,7 @@ const Signuppage = () => {
 
     const handleContinue = async () => {
         try {
+            setLoading(true)
             const res = await fetch("/api/account/check-email", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -34,10 +37,13 @@ const Signuppage = () => {
 
             if (res.ok && data.exists) {
                 setEmailexist(true);
+                setLoading(false)
             } else {
                 setEmailexist(false);
+                setLoading(false)
             }
         } catch (err) {
+            setLoading(false)
             console.error(err);
             toast("Something went wrong.");
         }
@@ -45,6 +51,7 @@ const Signuppage = () => {
 
     const handleSignup = async () => {
         try {
+            setLoading(true)
             const res = await fetch("/api/account/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -54,12 +61,15 @@ const Signuppage = () => {
             const data = await res.json();
 
             if (res.ok) {
+                setLoading(false)
                 toast("Signup Successful!");
                 router.push("/auth/login");
             } else {
+                setLoading(false)
                 toast(data.error || "Failed to Signup.");
             }
         } catch (err) {
+            setLoading(false)
             console.error(err);
             toast("Something went wrong.");
         }
@@ -94,21 +104,21 @@ const Signuppage = () => {
                 {emailexist===false?(
                     <>
                 <button
-                    disabled={!signupform.email || !signupform.password || !signupform.confirmpassword}
+                    disabled={!signupform.email || !signupform.password || !signupform.confirmpassword || loading}
                     onClick={() => handleSignup()}
                     className={`w-1/2 py-2 font-semibold text-center text-black rounded-full ${signupform.email && signupform.password &&signupform.confirmpassword && signupform.password===signupform.confirmpassword ? "bg-amber-300 hover:bg-amber-400" : "bg-gray-300 cursor-not-allowed"
                         }`}>
-                    Signup
+                    {loading?"Please Wait....":"Sign up"}
                 </button>
                 <Link href={"/auth/forgotpassword"} className='underline'>Forgot password?</Link>
                 </>
                 ):(
                 <button
-                    disabled={!signupform.email}
+                    disabled={!signupform.email || loading}
                     onClick={() => handleContinue()}
                     className={`w-1/2 py-2 font-semibold text-center text-black rounded-full ${signupform.email ? "bg-amber-300 hover:bg-amber-400" : "bg-gray-300 cursor-not-allowed"
                         }`}>
-                    Continue
+                    {loading?"Please Wait....":"Continue"}
                 </button>
 
                 )}  

@@ -5,17 +5,27 @@ import Image from 'next/image';
 
 
 const Payment = ({name,username, fuelCost,id }) => {
-    const { data: session,update } = useSession();
+    const { data: session} = useSession();
     const [paymentform, setPaymentform] = useState({ fuel: 1, amount: 0, senderName: "", fromUsername: "Anonymous", toUsername: username, fromUseremail: "Anonymous", message: "",toUserID:id })
     const [finalAmount, setFinalAmount] = useState(paymentform.fuel * fuelCost)
+    const [loading, setLoading] = useState(false);
+    
 
     const handleChange = (e) => {
-        setPaymentform({ ...paymentform, [e.target.name]: e.target.value })
-    }
+        const { name, value } = e.target;
+        if (name === 'fuel') {
+          if (/^\d*$/.test(value)) {
+            setPaymentform({ ...paymentform, [name]: value });
+          }
+        } else {
+          setPaymentform({ ...paymentform, [name]: value });
+        }
+      };
 
     const handlePay = async (e) => {
         setPaymentform(prev => ({ ...prev,amount:finalAmount*100 }));
         try {
+            setLoading(true)
             const res = await fetch("/api/razorpay/order", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -28,6 +38,7 @@ const Payment = ({name,username, fuelCost,id }) => {
             const orderData = await res.json();
 
             if (!orderData.id) {
+                setLoading(false)
                 toast("Fueling failed, please try again later.");
                 return;
             }
@@ -60,9 +71,11 @@ const Payment = ({name,username, fuelCost,id }) => {
                     const verifyData = await verifyRes.json();
                 
                     if (verifyData.success) {
+                        setLoading(false)
                         window.location.reload();
                         alert("Payment verified successfully! Thank you for your Support.");
                     } else {
+                        setLoading(false)
                         alert("Payment verification failed.");
                         window.location.reload();
                     }
@@ -82,11 +95,13 @@ const Payment = ({name,username, fuelCost,id }) => {
 
             const rzp = new window.Razorpay(options);
             rzp.on('payment.failed', function (response) {
+                setLoading(false)
                 console.error("Payment failed:", response.error);
                 toast("Payment failed: " + response.error.description);
             });
             rzp.open();
         } catch (err) {
+            setLoading(false)
             console.error("Payment initiation failed", err);
             toast("Something went wrong - Fueling failed, please try again later.");
         }
@@ -136,12 +151,12 @@ const Payment = ({name,username, fuelCost,id }) => {
                 <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 1 }))} className={`w-[50px] h-[50px] ${paymentform.fuel === 1 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>1</div>
                 <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 3 }))} className={`w-[50px] h-[50px] ${paymentform.fuel === 3 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>3</div>
                 <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 5 }))} className={`w-[50px] h-[50px] ${paymentform.fuel === 5 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>5</div>
-                <input onChange={handleChange} value={paymentform.fuel} className='w-[50px] h-[50px] text-center border-2 border-white rounded-xl' placeholder='10' type="number" name="fuel" />
+                <input onChange={handleChange} value={paymentform.fuel} className='w-[50px] h-[50px] text-center border-2 border-white rounded-xl' placeholder='10' type="number" step="1" min="0" name="fuel" />
             </div>
             <input onChange={handleChange} className='w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg mb-3 ' placeholder='Name (required)' type="text" name="senderName" />
             <input onChange={handleChange} className='w-full h-[100px] p-3 text-lg bg-gray-300 text-gray-700 rounded-lg mb-3 ' placeholder='Say something nice...(optional)' type="text" name="message" />
-            <button disabled={!paymentform.senderName} onClick={() => handlePay()} className="disabled:cursor-not-allowed text-black bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full m-2 font-semibold flex justify-center gap-2">
-                <span>Fuel</span><span>₹{finalAmount}</span>
+            <button disabled={!paymentform.senderName || loading} onClick={() => handlePay()} className="disabled:cursor-not-allowed text-black bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full m-2 font-semibold flex justify-center gap-2">
+                <span>{loading?"Please wait..":"Fuel"}</span><span>{loading?"":`₹${finalAmount}`}</span>
             </button>
         </div>
     )

@@ -5,7 +5,7 @@ const UserprofileSchema = new mongoose.Schema({
     coverImage: { type: String,default:"/cover.png" },
     title:{type:String},
     about:{type:String},
-    fuelCost:{type:Number, default:1},
+    fuelCost:{type:Number, default:100, min: [100, 'fuelCost must be at least 100']},
     introLink:{type:String},
     website:{type:String},
     behance:{type:String},

@@ -4,10 +4,12 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast, ToastContainer } from 'react-toastify'
 import Image from 'next/image'
+import { set } from 'mongoose'
 
 const Forgotpasswordpage = () => {
     const [resetform, setResetform] = useState({ email: "", password: "", confirmpassword: "" })
     const [emailexist, setEmailexist] = useState()
+    const [loading, setLoading] = useState(false);
     const router=useRouter()
 
     const handleChange = (e) => {
@@ -16,6 +18,7 @@ const Forgotpasswordpage = () => {
 
     const handleContinue = async () => {
         try {
+            setLoading(true)
             const res = await fetch("/api/account/check-email", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -25,12 +28,14 @@ const Forgotpasswordpage = () => {
             const data = await res.json();
 
             if (res.ok && data.exists) {
+                setLoading(false)
                 setEmailexist(true);
             } else {
                 setEmailexist(false);
                 alert("Does not exist")
             }
         } catch (err) {
+            setLoading(false)
             console.error(err);
             alert("Something went wrong.");
         }
@@ -38,6 +43,7 @@ const Forgotpasswordpage = () => {
 
     const handleReset = async () => {
         try {
+            setLoading(true)
             const res = await fetch("/api/account/reset-password", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -47,12 +53,14 @@ const Forgotpasswordpage = () => {
             const data = await res.json();
 
             if (res.ok) {
+                setLoading(false)
                 toast("Password updated!");
                 router.push("/auth/login");
             } else {
                 toast(data.error || "Failed to update password.");
             }
         } catch (err) {
+            setLoading(false)
             console.error(err);
             toast("Something went wrong.");
         }
@@ -80,19 +88,19 @@ const Forgotpasswordpage = () => {
 
                 {emailexist=== true?(
                     <button onClick={() => handleReset()}
-                    disabled={!resetform.email || !resetform.password || !resetform.confirmpassword}
+                    disabled={!resetform.email || !resetform.password || !resetform.confirmpassword || loading}
 
                     className={`w-1/2 py-2 font-semibold text-center text-black rounded-full ${resetform.email && resetform.password && resetform.confirmpassword && resetform.confirmpassword=== resetform.password  ? "bg-amber-300 hover:bg-amber-400" : "bg-gray-300 cursor-not-allowed"
                         }`}>
-                    Reset
+                    {loading?"Please Wait...":"Reset"}
                 </button>
                 ):(
                     <button onClick={() => handleContinue()}
-                    disabled={!resetform.email}
+                    disabled={!resetform.email || loading}
 
                     className={`w-1/2 py-2 font-semibold text-center text-black rounded-full ${resetform.email ? "bg-amber-300 hover:bg-amber-400" : "bg-gray-300 cursor-not-allowed"
                         }`}>
-                    Continue
+                    {loading?"Please Wait...":"Continue"}
                 </button>
                 )}    
 

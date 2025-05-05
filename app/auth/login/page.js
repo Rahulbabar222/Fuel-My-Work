@@ -10,6 +10,8 @@ import Image from 'next/image'
 const Loginpage = () => {
     const [loginform, setLoginform] = useState({email:"",password:""})
     const [emailexist, setEmailexist] = useState()
+    const [loading, setLoading] = useState(false);
+
     const router = useRouter()
 
     const { data: session } = useSession();
@@ -25,6 +27,7 @@ const Loginpage = () => {
 
     const handleContinue = async () => {
         try {
+            setLoading(true)
             const res = await fetch("/api/account/check-email", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -34,11 +37,14 @@ const Loginpage = () => {
             const data = await res.json();
 
             if (res.ok && data.exists) {
+                setLoading(false)
                 setEmailexist(true);
             } else {
+                setLoading(false)
                 setEmailexist(false);
             }
         } catch (err) {
+            setLoading(false)
             console.error(err);
             toast("Something went wrong.");
         }
@@ -46,6 +52,7 @@ const Loginpage = () => {
 
     const handleLogin = async () => {
         try {
+            setLoading(true)
             const res = await signIn("credentials", {
                 redirect: false,
                 email: loginform.email,
@@ -53,12 +60,15 @@ const Loginpage = () => {
             });
     
             if (res.ok) {
+                setLoading(false)
                 router.push("/account/dashboard");
             } else {
+                setLoading(false)
                 toast("Invalid email or password");
             }
     
         } catch (err) {
+            setLoading(false)
             console.error(err);
             toast("Something went wrong.");
         }
@@ -82,21 +92,21 @@ const Loginpage = () => {
                 {emailexist?(
                     <>
                 <button
-                    disabled={!loginform.email || !loginform.password}
+                    disabled={!loginform.email || !loginform.password || loading}
                     onClick={() => handleLogin()}
                     className={`w-1/2 py-2 font-semibold text-center text-black rounded-full ${loginform.email &&loginform.password ? "bg-amber-300 hover:bg-amber-400" : "bg-gray-300 cursor-not-allowed"
                         }`}>
-                    Login
+                    {loading?"Please Wait....":"Login"}
                 </button>
                 <Link href={"/auth/forgotpassword"} className='underline'>Forgot password?</Link>
                 </>
                 ):(
                 <button
-                    disabled={!loginform.email}
+                    disabled={!loginform.email || loading}
                     onClick={() => handleContinue()}
                     className={`w-1/2 py-2 font-semibold text-center text-black rounded-full ${loginform.email ? "bg-amber-300 hover:bg-amber-400" : "bg-gray-300 cursor-not-allowed"
                         }`}>
-                    Continue
+                    {loading?"Please Wait....":"Continue"}
                 </button>
 
                 )}
