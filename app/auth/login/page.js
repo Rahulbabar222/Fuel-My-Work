@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { toast, ToastContainer } from 'react-toastify'
 
 
-const Login = () => {
+const Loginpage = () => {
     const [loginform, setLoginform] = useState({email:"",password:""})
     const [emailexist, setEmailexist] = useState()
     const router = useRouter()
@@ -150,4 +150,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Loginpage

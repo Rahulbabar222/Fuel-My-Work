@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast, ToastContainer } from 'react-toastify'
 
-const page = () => {
+const Forgotpasswordpage = () => {
     const [resetform, setResetform] = useState({ email: "", password: "", confirmpassword: "" })
     const [emailexist, setEmailexist] = useState()
     const router=useRouter()
@@ -97,4 +97,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Forgotpasswordpage

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast, ToastContainer } from 'react-toastify'
 
-const Login = () => {
+const Signuppage = () => {
     const [signupform, setSignupform] = useState({email:"",password:"",confirmpassword:""})
     const [emailexist, setEmailexist] = useState()
     const router = useRouter()
@@ -113,4 +113,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Signuppage
