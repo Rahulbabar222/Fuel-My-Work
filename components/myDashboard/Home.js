@@ -142,6 +142,11 @@ const Home = () => {
                             <div className='px-5 mt-5'>
                                 <h3 className='text-5xl font-semibold'>₹ {amount}</h3>
                             </div>
+
+                            <div className='flex items-center gap-3 px-7 mt-3'>
+                                <div className='w-[12px] h-[12px] bg-amber-300 '></div>
+                                <span>{igniters.length} Supporters</span>
+                            </div>
                         </div>
                     </div>
                     
