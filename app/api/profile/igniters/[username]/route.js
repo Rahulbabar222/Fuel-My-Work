@@ -2,11 +2,10 @@ import { connectDB } from "@/db/mongoose";
 import { User } from "@/models/User";
 import { SucessfulDonation } from "@/models/SucessfulDonation";
 
-export const GET = async (req, { params }) => {
+export const GET = async (req, {params}) => {
     try {
         await connectDB();
-
-        const username = await params.username;
+        const { username } = await params;
 
         const user = await User.findOne({ username });
 
@@ -22,7 +21,6 @@ export const GET = async (req, { params }) => {
             { senderName: 1, amount: 1,currency:1, message: 1,fromUsername:1,
                 fromUseremail:1, paidAt: 1, _id: 0 } 
           );
-        console.log(igniters)
 
         if (!igniters){
             return new Response(JSON.stringify({ error: "No Igniters found" }), {

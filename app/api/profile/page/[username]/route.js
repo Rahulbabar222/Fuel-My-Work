@@ -2,11 +2,11 @@ import { connectDB } from "@/db/mongoose";
 import { User } from "@/models/User";
 import { Userprofile } from "@/models/Userprofile";
 
-export const GET = async (req, { params }) => {
+export const GET = async (req, {params}) => {
     try {
         await connectDB();
 
-        const username = await params.username;
+        const { username } = await params;
 
         const user = await User.findOne({ username });
 
@@ -18,7 +18,6 @@ export const GET = async (req, { params }) => {
         }
 
         const userProfile = await Userprofile.findById(user._id)
-        console.log(userProfile)
 
         return new Response(JSON.stringify({
             name: user.name,
