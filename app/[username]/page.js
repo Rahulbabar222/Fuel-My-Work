@@ -1,6 +1,7 @@
 "use client"
 import Payment from '@/components/myPage/PaymentSection';
 import SocialLink from '@/components/myPage/SocialLink';
+import Image from 'next/image';
 import React, { use, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -83,10 +84,21 @@ const Username = ({ params }) => {
                     <ToastContainer />
                     <div className='flex flex-col items-center'>
                         <div className='cover w-full '>
-                            <img className='object-cover w-full max-h-[400px]' src={pageform.coverImage} alt="" />
+                            <Image
+                                className="object-cover w-full max-h-[400px]"
+                                src={pageform.coverImage}
+                                alt="Cover image"
+                                width={2000} 
+                                height={400} 
+                                quality={100}
+                            />
                         </div>
                         <div className='cover rounded-md  '>
-                            <img className='object-cover border border-zinc-400 rounded-md w-[150px] h-[150px] -mt-[75px]' src={pageform.profileImage} alt="" />
+                            <Image
+                            width={500} 
+                            height={500} 
+                            quality={100}
+                             className='object-cover border border-zinc-400 rounded-md w-[150px] h-[150px] -mt-[75px]' src={pageform.profileImage} alt="Profile Image" />
                         </div>
                     </div>
                     <div className='w-full h-fit gap-2 flex flex-col items-center my-3'>
@@ -141,10 +153,14 @@ const Username = ({ params }) => {
                                     recentIgniters.map(igniter => (
                                         <li key={igniter.paidAt} className='flex items-center gap-3 mb-5'>
                                             <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
-                                                <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                                <Image 
+                                                width={500} 
+                                                height={500} 
+                                                quality={100}
+                                                className='object-cover rounded-full' src="/profile/default.png" alt="" />
                                             </div>
                                             <div className='w-full'>
-                                                <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount/pageform.fuelCost} boosts.</p>
+                                                <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount / pageform.fuelCost} boosts.</p>
                                                 {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
                                             </div>
                                         </li>
@@ -169,10 +185,14 @@ const Username = ({ params }) => {
                                                 igniters.map(igniter => (
                                                     <li key={igniter.paidAt} className='flex items-center gap-3 mb-5'>
                                                         <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
-                                                            <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                                            <Image
+                                                            width={500} 
+                                                            height={500} 
+                                                            quality={100}
+                                                            className='object-cover rounded-full' src="/profile/default.png" alt="" />
                                                         </div>
                                                         <div className='w-full'>
-                                                            <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount/pageform.fuelCost} boosts.</p>
+                                                            <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount / pageform.fuelCost} boosts.</p>
                                                             {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
                                                         </div>
                                                     </li>
@@ -187,6 +207,7 @@ const Username = ({ params }) => {
                         </div>
                         <div className='w-full md:w-2/3 lg:w-1/3 h-fit m-5 rounded-lg' >
                             <Payment
+                                name={pageform.name ? pageform.name : pageform.username}
                                 username={pageform.username}
                                 fuelCost={pageform.fuelCost}
                                 id={pageform.id} />

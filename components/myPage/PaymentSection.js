@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSession } from "next-auth/react"
 import { ToastContainer, toast } from 'react-toastify';
+import Image from 'next/image';
 
 
-const Payment = ({username, fuelCost,id }) => {
+const Payment = ({name,username, fuelCost,id }) => {
     const { data: session,update } = useSession();
     const [paymentform, setPaymentform] = useState({ fuel: 1, amount: 0, senderName: "", fromUsername: "Anonymous", toUsername: username, fromUseremail: "Anonymous", message: "",toUserID:id })
     const [finalAmount, setFinalAmount] = useState(paymentform.fuel * fuelCost)
@@ -112,20 +113,24 @@ const Payment = ({username, fuelCost,id }) => {
     return (
         <div className='w-full h-fit bg-indigo-950/60 p-5 rounded-lg'>
             <div className=' flex gap-2 items-center group'>
-                <h2 className='text-2xl font-bold'>Fuel {name}'s work </h2>
+                <h2 className='text-2xl font-bold'>Fuel {name}&#39;s work </h2>
                 <button className='relative'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#ffffff" fill="none">
                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                     <path d="M10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 9.39815 13.8837 9.76913 13.6831 10.0808C13.0854 11.0097 12 11.8954 12 13V13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                     <path d="M11.992 17H12.001" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                     <div className='text-sm p-2 rounded-xl border-2 border-indigo-500 hidden group-hover:block group-focus:block w-[200px] h-fit bg-white text-black absolute -left-25 sm:left-0   bottom-6'>
-                        It's a friendly metaphor, not real fuel. Each 'fuel' is ₹{fuelCost}, and you can buy as many as you like.
+                        It&#39;s a friendly metaphor, not real fuel. Each &#39;fuel&#39; is ₹{fuelCost}, and you can buy as many as you like.
                     </div>
                 </button>
             </div>
             <div className='flex items-center gap-5 my-3 p-4 border-2 border-indigo-500 rounded-lg bg-indigo-950'>
                 <div className='w-[50px]'>
-                    <img src="/logo.png" alt="" />
+                    <Image
+                    width={50} 
+                    height={50} 
+                    quality={100}
+                    src="/logo.png" alt="logo" />
                 </div>
                 <h5 className='font-bold text-lg'>x</h5>
                 <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 1 }))} className={`w-[50px] h-[50px] ${paymentform.fuel === 1 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>1</div>

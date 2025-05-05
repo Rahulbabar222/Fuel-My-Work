@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react"
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import { formatLocalDate } from '@/utility/Date-Time';
+import Image from 'next/image';
 
 
 const Home = () => {
@@ -102,7 +103,11 @@ const Home = () => {
                         <div className='flex flex-col lg:flex-row items-center justify-between px-4'>
                             <div className='flex flex-col lg:flex-row items-center gap-5'>
                                 <div className='rounded-full cover'>
-                                    <img className='object-cover w-[100px] h-[100px] rounded-full' src="/profile.png" alt="" />
+                                    <Image 
+                                    width={100} 
+                                    height={100} 
+                                    quality={100}
+                                    className='object-cover w-[100px] h-[100px] rounded-full' src="/profile.png" alt="Profile" />
                                 </div>
                                 <div>
                                     <h2 className='font-semibold text-lg text-center lg:text-start'>Hi, {session.user.name || session.user.username}</h2>
@@ -162,7 +167,11 @@ const Home = () => {
                                         recentIgniters.map(igniter => (
                                             <li key={igniter.paidAt} className='flex items-center gap-3 mb-7'>
                                                 <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
-                                                    <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                                    <Image 
+                                                     width={500} 
+                                                     height={500} 
+                                                     quality={100}
+                                                    className='object-cover rounded-full' src="/profile/default.png" alt="profile" />
                                                 </div>
                                                 <div className='w-full'>
                                                     <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with ₹ {igniter.amount} on {formatLocalDate(igniter.paidAt)}</p>
@@ -215,7 +224,11 @@ const Home = () => {
                                     igniters.map(igniter => (
                                         <li key={igniter.paidAt} className='flex items-center gap-3 mb-7'>
                                             <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
-                                                <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                                <Image
+                                                width={500} 
+                                                height={500} 
+                                                quality={100}
+                                                className='object-cover rounded-full' src="/profile/default.png" alt="" />
                                             </div>
                                             <div className='w-full'>
                                                 <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with ₹ {igniter.amount} on {formatLocalDate(igniter.paidAt)}</p>

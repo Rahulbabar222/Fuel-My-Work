@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
 const features = [
@@ -49,7 +50,11 @@ const FeatureCarousel = () => {
             <div className="text-center text-white text-lg font-medium mx-10 flex flex-col justify-center items-center gap-3
             transition-all duration-2000">
                 <p className='text-xl'>{features[index].text}</p>
-                <img src={features[index].image} style={{ height: '150px' }} alt={features[index].text} />
+                <Image
+                width={150} 
+                height={150} 
+                quality={100}
+                src={features[index].image} style={{ height: '150px' }} alt={features[index].text} />
                 <div className='flex gap-5 py-3'>
                     <div onClick={()=>setIndex(0)} className={`w-6 h-3 border border-white rounded-full ${index===0?"bg-white":"bg-transparent"}`}></div>
                     <div onClick={()=>setIndex(1)} className={`w-6 h-3 border border-white rounded-full ${index===1?"bg-white":"bg-transparent"}`}></div>

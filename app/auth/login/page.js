@@ -4,6 +4,7 @@ import { signIn, useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast, ToastContainer } from 'react-toastify'
+import Image from 'next/image'
 
 
 const Loginpage = () => {
@@ -67,7 +68,11 @@ const Loginpage = () => {
         <div className='flex justify-center items-center h-screen relative'>
             <ToastContainer/>
             <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
-                <Link href={"/"}><img src="/logo.png" alt="" width={"50"} /></Link>
+                <Link href={"/"}><Image
+                width={70} 
+                height={70} 
+                quality={100}                
+                src="/logo.png" alt="Logo" /></Link>
                 <h1 className='text-3xl font-bold'>Welcome Back</h1>
                 <input onChange={handleChange} type="email" name="email" value={loginform.email} placeholder='Email Address' className='px-2 py-2 bg-zinc-300 w-full rounded-md text-black' />
                 {emailexist===true &&

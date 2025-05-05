@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast, ToastContainer } from 'react-toastify'
+import Image from 'next/image'
 
 const Signuppage = () => {
     const [signupform, setSignupform] = useState({email:"",password:"",confirmpassword:""})
@@ -68,7 +69,11 @@ const Signuppage = () => {
         <div className='flex justify-center items-center h-screen relative'>
             <ToastContainer/>
             <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
-                <Link href={"/"}><img src="/logo.png" alt="" width={"50"} /></Link>
+                <Link href={"/"}><Image
+                width={70} 
+                height={70} 
+                quality={100}
+                src="/logo.png" alt=""  /></Link>
                 <div className='flex flex-col items-center'>
                 <h1 className='text-3xl font-bold'>Welcome</h1>
                 <h2 className='text-2xl font-bold'>Sign up</h2>

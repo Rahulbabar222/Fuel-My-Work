@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useSession, signOut } from "next-auth/react"
 import { ToastContainer } from 'react-toastify'
+import Image from 'next/image'
 
 const Navbar = () => {
     const { data: session } = useSession();
@@ -17,7 +18,11 @@ const Navbar = () => {
                     <path d="M4 12L20 12" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M4 19L20 19" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                 </svg>
-                <img src="/logo.png" width={"30"} alt="" />
+                <Image
+                width={30} 
+                height={30} 
+                quality={100}
+                src="/logo.png" alt="logo" />
 
             </div>
             {hamburger === true &&
@@ -62,7 +67,11 @@ const Navbar = () => {
             </div>
 
             <Link href={"/"} className='hidden lg:flex gap-3 w-1/3 justify-center items-center' >
-                <img src="/logo.png" width={"50"} alt="" />
+                <Image
+                width={50} 
+                height={50} 
+                quality={100}
+                src="/logo.png" alt="logo" />
                 <h1 className='font-bold text-3xl hidden md:block w-fit text-center'>Fuel My Work</h1>
                 <p className='text-lg hidden sm:block'>&reg;</p>
             </Link>
