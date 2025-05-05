@@ -2,12 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { useSession } from "next-auth/react"
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
+import { formatLocalDate } from '@/utility/Date-Time';
 
 
 const Home = () => {
     const { data: session, status } = useSession();
-    const [igniters, setIgniters] = useState([])
+    const [igniters, setIgniters] = useState([]);
+    const [recentIgniters, setRecentIgniters] = useState([])
     const [amount, setAmount] = useState(0)
+    const [amountfilterdropdown, setAmountfilterdropdown] = useState(false)
+    const [amountfilter, setAmountfilter] = useState("Last 30 days")
+    const [showAll, setShowAll] = useState(false)
+    
+
     useEffect(() => {
         if (status === "loading") return
         const fetchIgniters = async () => {
@@ -21,7 +28,12 @@ const Home = () => {
                 }
 
                 const data = await res.json();
-                setIgniters(data.igniters);//data obtained is object and need to extract array to map
+                
+                const sorted = [...data.igniters].sort(
+                    (a, b) => new Date(b.paidAt) - new Date(a.paidAt)
+                );
+            
+                setIgniters(sorted);//data obtained is object and need to extract array to map
 
             } catch (err) {
                 console.error("Error fetching igniters:", err);
@@ -31,12 +43,49 @@ const Home = () => {
     }, [session])
 
     useEffect(() => {
-        const total = igniters
-            .filter(item => item.amount)
-            .reduce((sum, item) => sum + item.amount, 0);
-
-        setAmount(total);
+        const recent = [...igniters]
+            .sort((a, b) => new Date(b.paidAt) - new Date(a.paidAt))
+            .slice(0, 3);
+        setRecentIgniters(recent)
     }, [igniters]);
+
+
+    useEffect(() => {
+        if (amountfilter === "All time") {
+            const total = igniters.filter(item => item.amount)
+                .reduce((sum, item) => sum + item.amount, 0);
+
+            setAmount(total);
+        } else if (amountfilter === "Last 90 days") {
+            const now = new Date();
+            const pastDate = new Date(now);
+            pastDate.setDate(now.getDate() - 90);
+
+            const filteredArray = igniters.filter(item => {
+                const paidDate = new Date(item.paidAt);
+                return paidDate >= pastDate && paidDate <= now;
+            });
+
+            const total = filteredArray.filter(item => item.amount)
+                .reduce((sum, item) => sum + item.amount, 0);
+
+            setAmount(total);
+        } else {
+            const now = new Date();
+            const pastDate = new Date(now);
+            pastDate.setDate(now.getDate() - 30);
+
+            const filteredArray = igniters.filter(item => {
+                const paidDate = new Date(item.paidAt);
+                return paidDate >= pastDate && paidDate <= now;
+            });
+
+            const total = filteredArray.filter(item => item.amount)
+                .reduce((sum, item) => sum + item.amount, 0);
+
+            setAmount(total);
+        }
+    }, [amountfilter, igniters]);
 
     const copytoClipboard = (text) => {
         navigator.clipboard.writeText(text);
@@ -47,7 +96,7 @@ const Home = () => {
             {status === "loading" ? (
                 <div>loading....</div>
             ) : (
-                <>
+                <>  
                     <div className='my-5 py-5 sm:px-10 lg:px-20 w-full xl:w-2/3 xl:px-0 h-fit bg-indigo-950/40 rounded-xl'>
 
                         <div className='flex flex-col lg:flex-row items-center justify-between px-4'>
@@ -74,35 +123,44 @@ const Home = () => {
                         <div>
                             <div className='flex items-center gap-5 px-5 '>
                                 <h3 className='text-3xl font-medium'>Earnings</h3>
-                                <button className='flex items-center px-3 py-1 rounded-full border-2 border-gray-400'>
-                                    <span>Last 30 days</span>
+                                <button onClick={() => setAmountfilterdropdown(!amountfilterdropdown)} onBlur={() => setTimeout(() => setAmountfilterdropdown(false), 100)}
+                                    className='relative flex items-center px-3 py-1 rounded-full border-2 border-gray-400'>
+                                    <span>{amountfilter}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#ffffff" fill="none">
                                         <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
+                                    {amountfilterdropdown && <ul className="absolute top-10 left-0 w-40 bg-white text-black rounded-md shadow-lg p-2 space-y-1 z-50">
+                                        <li onClick={() => { setAmountfilter("Last 30 days"); }} className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer">Last 30 days</li>
+                                        <li onClick={() => { setAmountfilter("Last 90 days"); }} className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer">Last 90 days</li>
+                                        <li onClick={() => { setAmountfilter("All time"); }} className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer">All time</li>
+                                    </ul>}
                                 </button>
+
 
                             </div>
 
                             <div className='px-5 mt-5'>
-                                <h3 onClick={() => console.log(igniters)} className='text-5xl font-semibold'>₹ {amount}</h3>
+                                <h3 className='text-5xl font-semibold'>₹ {amount}</h3>
                             </div>
                         </div>
                     </div>
+                    
 
                     <div className='mb-5 py-5 sm:px-10 lg:px-25 w-full xl:w-2/3 xl:px-0 h-fit bg-indigo-950/40 rounded-xl'>
-                        {igniters.length > 0 ? (
-                            <div className='w-full h-[500px]'>
+                        {recentIgniters.length > 0 ? (
+                            <div className='w-full h-fit'>
                                 <ul className='px-5' >
-                                    <li className='text-lg font-semibold'>Total {igniters.length} Igniters have fueled your work.</li>
+                                    {/* <li className='text-lg font-semibold'>Total {igniters.length} Igniters have fueled your work.</li> */}
+                                    <li className='text-lg font-semibold'>Recent Igniters</li>
                                     <hr className='my-4 border-zinc-700' />
-                                    {igniters && igniters.length > 0 &&
-                                        igniters.map(igniter => (
+                                    {recentIgniters && recentIgniters.length > 0 &&
+                                        recentIgniters.map(igniter => (
                                             <li key={igniter.paidAt} className='flex items-center gap-3 mb-7'>
                                                 <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
                                                     <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
                                                 </div>
                                                 <div className='w-full'>
-                                                    <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with ₹ {igniter.amount}.</p>
+                                                    <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with ₹ {igniter.amount} on {formatLocalDate(igniter.paidAt)}</p>
                                                     {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
                                                     <div className='p-2 mt-2 rounded-md border border-zinc-700'>
                                                         {igniter.fromUseremail === "Anonymous" && igniter.fromUsername === "Anonymous" ? (
@@ -111,7 +169,7 @@ const Home = () => {
                                                             <>
                                                                 <p>Appreciate your supporter</p>
                                                                 <p>Email - {igniter.fromUseremail}</p>
-                                                                <p>User Page - <Link className='underline' href={`/${igniter.fromUsername}`}>{igniter.fromUsername}</Link></p>
+                                                                <p>User Page - <Link className='underline' target='_blank' href={`/${igniter.fromUsername}`}>{igniter.fromUsername}</Link></p>
                                                             </>
                                                         )}
 
@@ -120,9 +178,17 @@ const Home = () => {
                                             </li>
                                         ))}
                                 </ul>
+                                {recentIgniters.length < 4 &&
+                                <div className='flex justify-center'>
+                                    <button onClick={()=>setShowAll(true)} className='px-3 py-2 rounded-xl bg-white text-black hover:bg-amber-300'>
+                                        Show All
+                                    </button>
+                                 </div>
+                                }
                             </div>
+
                         ) : (
-                            <div className='w-full h-[200px] flex flex-col items-center justify-center gap-5'>
+                            <div className='w-full h-[250px] flex flex-col items-center justify-center  gap-5'>
                                 <p className='text-5xl'>🔥</p>
                                 <h3 className='text-lg font-medium'>You dont have any igniters yet</h3>
                                 <h3 className='text-gray-300'>Share your page with your audience to get started.</h3>
@@ -131,6 +197,46 @@ const Home = () => {
 
 
                     </div >
+
+                    {/* Show All Section  */}
+                    {showAll && 
+                    <div className='w-screen h-screen flex flex-col justify-center items-center fixed top-0 left-0 bg-black/80'>
+                        <div className='w-full sm:w-2/3 h-[600px]  bg-indigo-950 px-3 py-[25px] rounded-lg'>
+                            <ul className='px-5 h-[550px] overflow-y-auto' >
+                                <li className='text-lg font-semibold text-center'>Total {igniters.length} Igniters have fueled your work.</li>
+
+                                <hr className='my-4 border-zinc-700' />
+                                {igniters && igniters.length > 0 &&
+                                    igniters.map(igniter => (
+                                        <li key={igniter.paidAt} className='flex items-center gap-3 mb-7'>
+                                            <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
+                                                <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                            </div>
+                                            <div className='w-full'>
+                                                <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with ₹ {igniter.amount} on {formatLocalDate(igniter.paidAt)}</p>
+                                                {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
+                                                <div className='p-2 mt-2 rounded-md border border-zinc-700'>
+                                                    {igniter.fromUseremail === "Anonymous" && igniter.fromUsername === "Anonymous" ? (
+                                                        <p>This was a Anonymous support, Keep up good work!</p>
+                                                    ) : (
+                                                        <>
+                                                            <p>Appreciate your supporter</p>
+                                                            <p>Email - {igniter.fromUseremail}</p>
+                                                            <p>User Page - <Link className='underline' target='_blank' href={`/${igniter.fromUsername}`}>{igniter.fromUsername}</Link></p>
+                                                        </>
+                                                    )}
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                            </ul>
+                        </div>
+                        <button onClick={()=>setShowAll(false)} className='px-3 m-3 py-2 rounded-xl bg-white text-black hover:bg-amber-300'>
+                            Close X
+                        </button>
+                    </div>
+                    }
                 </>
             )}
 

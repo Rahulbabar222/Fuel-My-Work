@@ -10,7 +10,10 @@ const Username = ({ params }) => {
     const [igniters, setIgniters] = useState([])
     const [pageform, setPageform] = useState({})
     const [profileexist, setProfileexist] = useState(null)
-    
+    const [showAll, setShowAll] = useState(false)
+    const [recentIgniters, setRecentIgniters] = useState([])
+
+
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -45,7 +48,11 @@ const Username = ({ params }) => {
                 }
 
                 const data = await res.json();
-                setIgniters(data.igniters);//data obtained is object and need to extract array to map
+                const sorted = [...data.igniters].sort(
+                    (a, b) => new Date(b.paidAt) - new Date(a.paidAt)
+                );
+
+                setIgniters(sorted);//data obtained is object and need to extract array to map
 
             } catch (err) {
                 console.error("Error fetching igniters:", err);
@@ -53,6 +60,13 @@ const Username = ({ params }) => {
         };
         fetchIgniters();
     }, [username]);
+
+    useEffect(() => {
+        const recent = [...igniters]
+            .sort((a, b) => new Date(b.paidAt) - new Date(a.paidAt))
+            .slice(0, 4);
+        setRecentIgniters(recent)
+    }, [igniters]);
     return (
         <>
             {/* loading screen */}
@@ -66,7 +80,7 @@ const Username = ({ params }) => {
             {/* profilepage */}
             {profileexist === true &&
                 <div>
-                    <ToastContainer/>
+                    <ToastContainer />
                     <div className='flex flex-col items-center'>
                         <div className='cover w-full '>
                             <img className='object-cover w-full max-h-[400px]' src={pageform.coverImage} alt="" />
@@ -123,14 +137,14 @@ const Username = ({ params }) => {
                             <hr className="border-t border-gray-300" />
                             <h3 className='text-xl font-bold my-3'>Recent Igniters</h3>
                             <ul >
-                                {igniters && igniters.length > 0 ? (
-                                    igniters.map(igniter => (
+                                {recentIgniters && recentIgniters.length > 0 ? (
+                                    recentIgniters.map(igniter => (
                                         <li key={igniter.paidAt} className='flex items-center gap-3 mb-5'>
                                             <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
                                                 <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
                                             </div>
                                             <div className='w-full'>
-                                                <p><span className='font-bold'>{igniter.senderName}</span> fueled your work.</p>
+                                                <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount/pageform.fuelCost} boosts.</p>
                                                 {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
                                             </div>
                                         </li>
@@ -139,9 +153,37 @@ const Username = ({ params }) => {
                                 )}
                             </ul>
 
-                            <button className="text-indigo-950 bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full m-2 font-semibold ">
+                            <button onClick={() => setShowAll(true)} className="text-indigo-950 bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full m-2 font-semibold ">
                                 Show More
                             </button>
+
+                            {/* Show All Section  */}
+                            {showAll &&
+                                <div className='w-screen h-screen flex flex-col justify-center items-center fixed top-0 left-0 bg-black/80 z-15'>
+                                    <div className='w-full sm:w-2/3 h-[600px]  bg-indigo-950 px-3 py-[25px] rounded-lg'>
+                                        <ul className='px-5 h-[550px] overflow-y-auto' >
+                                            <li className='text-lg font-semibold text-center'>Total {igniters.length} Igniters have fueled your work.</li>
+
+                                            <hr className='my-4 border-zinc-700' />
+                                            {igniters && igniters.length > 0 &&
+                                                igniters.map(igniter => (
+                                                    <li key={igniter.paidAt} className='flex items-center gap-3 mb-5'>
+                                                        <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
+                                                            <img className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                                        </div>
+                                                        <div className='w-full'>
+                                                            <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount/pageform.fuelCost} boosts.</p>
+                                                            {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                        </ul>
+                                    </div>
+                                    <button onClick={() => setShowAll(false)} className='px-3 m-3 py-2 rounded-xl bg-white text-black hover:bg-amber-300'>
+                                        Close X
+                                    </button>
+                                </div>
+                            }
                         </div>
                         <div className='w-full md:w-2/3 lg:w-1/3 h-fit m-5 rounded-lg' >
                             <Payment

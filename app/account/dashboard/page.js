@@ -62,7 +62,7 @@ const Dashboard = () => {
                     <Sidebar setClientConsole={setClientConsole} activeComponent={activeComponent} setActiveComponent={setActiveComponent} />
                 </div>
 
-                <div className={`${clientConsole===false?"block":"hidden"} bg-indigo-950/30 my-5 mx-5 w-full sm:w-7/10 lg:w-15/20 xl:w-4/5 flex justify-center overflow-y-auto`}>
+                <div className={`${clientConsole===false?"block":"hidden"} bg-indigo-950/30 my-5  mx-5 w-full sm:w-7/10 lg:w-15/20 xl:w-4/5 flex justify-center overflow-y-auto`}>
                     {renderComponent()}
                 </div>
             </div>
