@@ -2,9 +2,9 @@ import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "@/models/User";
-import { Payment } from "@/models/Paymentreceipt";
 import { connectDB } from "@/db/mongoose";
 import GoogleProvider from "next-auth/providers/google";
+import { LoginAlertEmail } from "@/resend/LoginAlert";
 
 export const authOptions = {
     providers: [
@@ -29,6 +29,8 @@ export const authOptions = {
                 const user = await User.findOne({ email: credentials.email });
                 if (!user) throw new Error("No user found");
                 if (user.password !== credentials.password) throw new Error("Invalid credentials");
+                
+                await LoginAlertEmail(user.email,user.username);
 
                 return {
                     id: user._id.toString(),
@@ -68,6 +70,7 @@ export const authOptions = {
             }
             if (account.provider === "credentials") {
                 console.log("User logged in using credentials:", user.email);
+
             }
             return true;
         },
