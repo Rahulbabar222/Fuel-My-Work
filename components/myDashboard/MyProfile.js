@@ -68,14 +68,18 @@ const MyProfile = ({activeComponent,setActiveComponent}) => {
             setProfileForm(savedForm);
         }
     }, []);
+
+    useEffect(() => {
+        return () => {
+            localStorage.removeItem("profileForm");
+        };
+    }, []);
     
     useEffect(() => {
         localStorage.setItem("profileForm", JSON.stringify(profileForm));
     }, [profileForm]);
 
-    useEffect(() => {
-        localStorage.removeItem("profileForm");
-    }, [activeComponent]);
+    
    
     const handleChange = (e) => {
         setProfileForm({ ...profileForm, [e.target.id]: e.target.value })
