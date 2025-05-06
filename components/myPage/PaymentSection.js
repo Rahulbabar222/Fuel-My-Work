@@ -134,24 +134,25 @@ const Payment = ({name,username, fuelCost,id }) => {
                     <path d="M10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 9.39815 13.8837 9.76913 13.6831 10.0808C13.0854 11.0097 12 11.8954 12 13V13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                     <path d="M11.992 17H12.001" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                    <div className='text-sm p-2 rounded-xl border-2 border-indigo-500 hidden group-hover:block group-focus:block w-[200px] h-fit bg-white text-black absolute -left-25 sm:left-0   bottom-6'>
+                    <div className='text-sm p-2 rounded-xl border-2 border-indigo-500 hidden group-hover:block group-active:block w-[200px] h-fit bg-white text-black absolute -left-25 sm:left-0   bottom-6'>
                         It&#39;s a friendly metaphor, not real fuel. Each &#39;fuel&#39; is ₹{fuelCost}, and you can buy as many as you like.
                     </div>
                 </button>
             </div>
-            <div className='flex items-center gap-5 my-3 p-4 border-2 border-indigo-500 rounded-lg bg-indigo-950'>
-                <div className='w-[50px]'>
+            <div className='flex items-center justify-between sm:justify-center gap-3 sm:gap-5 my-3 p-4 border-2 border-indigo-500 rounded-lg bg-indigo-950'>
+                <div className='w-[35px] sm:w-[50px]'>
                     <Image
+                    className='w-[35px] sm:w-[50px]'
                     width={50} 
                     height={50} 
                     quality={100}
                     src="/logo.png" alt="logo" />
                 </div>
                 <h5 className='font-bold text-lg'>x</h5>
-                <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 1 }))} className={`w-[50px] h-[50px] ${paymentform.fuel === 1 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>1</div>
-                <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 3 }))} className={`w-[50px] h-[50px] ${paymentform.fuel === 3 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>3</div>
-                <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 5 }))} className={`w-[50px] h-[50px] ${paymentform.fuel === 5 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>5</div>
-                <input onChange={handleChange} value={paymentform.fuel} className='w-[50px] h-[50px] text-center border-2 border-white rounded-xl' placeholder='10' type="number" step="1" min="0" name="fuel" />
+                <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 1 }))} className={`w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] ${paymentform.fuel === 1 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>1</div>
+                <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 3 }))} className={`w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] ${paymentform.fuel === 3 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>3</div>
+                <div onClick={() => setPaymentform(prev => ({ ...prev, fuel: 5 }))} className={`w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] ${paymentform.fuel === 5 ? " bg-amber-300 text-indigo-950" : "bg-indigo-950 text-white "} border-2 border-white rounded-full flex items-center justify-center`}>5</div>
+                <input onChange={handleChange} value={paymentform.fuel} className='w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] text-center border-2 border-white rounded-xl' placeholder='10' type="number" step="1" min="0" name="fuel" />
             </div>
             <input onChange={handleChange} className='w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg mb-3 ' placeholder='Name (required)' type="text" name="senderName" />
             <input onChange={handleChange} className='w-full h-[100px] p-3 text-lg bg-gray-300 text-gray-700 rounded-lg mb-3 ' placeholder='Say something nice...(optional)' type="text" name="message" />
