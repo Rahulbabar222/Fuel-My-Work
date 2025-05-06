@@ -2,6 +2,7 @@ import mongoose, { model } from "mongoose";
 
 const PaymentreceiptSchema=new  mongoose.Schema({
     toUser:{type:String},
+    toUserID:{type:String},
     amount:{type:Number},
     receipt:{type:String,unique: true},
     currency:{type:String},

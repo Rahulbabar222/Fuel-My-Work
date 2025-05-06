@@ -8,7 +8,7 @@ export const GET = async (req, {params}) => {
         const { username } = await params;
 
         const user = await User.findOne({ username });
-
+        console.log(user)
         if (!user) {
             return new Response(JSON.stringify({ error: "Username not found" }), {
                 status: 404,
@@ -17,10 +17,12 @@ export const GET = async (req, {params}) => {
         }
 
         const igniters = await SucessfulDonation.find(
-            { toUser: username },
+            { toUserID: user._id },
             { senderName: 1, amount: 1,currency:1, message: 1,fromUsername:1,
                 fromUseremail:1, paidAt: 1, _id: 0 } 
           );
+         
+          console.log(igniters)
 
         if (!igniters){
             return new Response(JSON.stringify({ error: "No Igniters found" }), {

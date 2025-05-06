@@ -19,6 +19,7 @@ export async function POST(req) {
             const finalizedReceipt = await Paymentreceipt.findOne({ receipt });
             if (finalizedReceipt) {
                 finalizedReceipt.razorpay_order_id = razorpay_order_id;
+                finalizedReceipt.toUserID= toUserID;
                 finalizedReceipt.razorpay_payment_id = razorpay_payment_id;
                 finalizedReceipt.toUser = toUser;
                 finalizedReceipt.amount = amount;
@@ -30,7 +31,8 @@ export async function POST(req) {
                     receipt,
                     razorpay_order_id,
                     razorpay_payment_id,
-                    to_user: toUser,
+                    toUser,
+                    toUserID,
                     amount,
                     currency,
                     done: true

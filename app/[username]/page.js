@@ -14,8 +14,6 @@ const Username = ({ params }) => {
     const [showAll, setShowAll] = useState(false)
     const [recentIgniters, setRecentIgniters] = useState([])
 
-
-
     useEffect(() => {
         const fetchProfile = async () => {
             try {
