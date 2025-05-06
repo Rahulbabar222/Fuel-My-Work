@@ -2,7 +2,7 @@ import React, { useState ,useEffect} from 'react'
 import { useSession } from "next-auth/react"
 import { toast } from 'react-toastify';
 
-const MyProfile = ({setActiveComponent}) => {
+const MyProfile = ({activeComponent,setActiveComponent}) => {
     const { data: session } = useSession();
 
     const [profileForm, setProfileForm] = useState({
@@ -72,6 +72,10 @@ const MyProfile = ({setActiveComponent}) => {
     useEffect(() => {
         localStorage.setItem("profileForm", JSON.stringify(profileForm));
     }, [profileForm]);
+
+    useEffect(() => {
+        localStorage.removeItem("profileForm");
+    }, [activeComponent]);
    
     const handleChange = (e) => {
         setProfileForm({ ...profileForm, [e.target.id]: e.target.value })

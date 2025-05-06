@@ -38,7 +38,7 @@ export const POST = async (req) => {
 
 export const PUT = async (req) => {
     try {
-        await connectDB();
+        await connectDB();  
 
         const { id, profileImage,
             coverImage,title, about, fuelCost,
@@ -46,7 +46,6 @@ export const PUT = async (req) => {
             pinterest,telegram,youtube,snapchat,reddit,x,whatsapp} = await req.json();
 
         const userProfile = await Userprofile.findById(id)
-
         if (!userProfile) {
             return new Response(JSON.stringify({ error: "Error saving data, Please try again later." }),
                 { status: 404, headers: { "Content-Type": "application/json" } }
