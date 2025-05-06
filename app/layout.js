@@ -3,6 +3,7 @@ import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import SessionWrapper from "@/components/SessionWrapper";
 import Script from "next/script";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
                     strategy="beforeInteractive"
                 />
                 <SessionWrapper>
+                    <ToastContainer />
                     <LayoutWrapper>
                         {children}
                     </LayoutWrapper>

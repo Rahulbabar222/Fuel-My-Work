@@ -7,7 +7,7 @@ import Sidebar from '@/components/myDashboard/Sidebar'
 import Home from '@/components/myDashboard/Home'
 import MyProfile from '@/components/myDashboard/MyProfile'
 import Payout from '@/components/myDashboard/Payout'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 
 const Dashboard = () => {
     const [activeComponent, setActiveComponent] = useState("home")

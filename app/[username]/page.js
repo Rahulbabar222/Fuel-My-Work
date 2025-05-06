@@ -3,8 +3,6 @@ import Payment from '@/components/myPage/PaymentSection';
 import SocialLink from '@/components/myPage/SocialLink';
 import Image from 'next/image';
 import React, { use, useEffect, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
-
 
 const Username = ({ params }) => {
     const { username } = use(params);
@@ -13,6 +11,7 @@ const Username = ({ params }) => {
     const [profileexist, setProfileexist] = useState(null)
     const [showAll, setShowAll] = useState(false)
     const [recentIgniters, setRecentIgniters] = useState([])
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -30,7 +29,7 @@ const Username = ({ params }) => {
                 setPageform(data);
                 setProfileexist(true);
             } catch (err) {
-                toast("Error fetching profile:", err);
+                alert("Error fetching profile:", err);
                 setProfileexist(false);
             }
         };
@@ -58,7 +57,7 @@ const Username = ({ params }) => {
             }
         };
         fetchIgniters();
-    }, [username]);
+    }, [username,loading]);
 
     useEffect(() => {
         const recent = [...igniters]
@@ -79,7 +78,6 @@ const Username = ({ params }) => {
             {/* profilepage */}
             {profileexist === true &&
                 <div>
-                    <ToastContainer />
                     <div className='flex flex-col items-center'>
                         <div className='cover w-full '>
                             <Image
@@ -101,7 +99,7 @@ const Username = ({ params }) => {
                     </div>
                     <div className='w-full h-fit gap-2 flex flex-col items-center my-3'>
                         <h2 className='text-4xl font-semibold'>{pageform.name ? pageform.name : pageform.username}</h2>
-                        <h6 className='text-sm'>345 Igniters 🔥
+                        <h6 className='text-sm'>{igniters.length} Igniters 🔥
                         </h6>
 
                         <div className='flex flex-wrap justify-center gap-3 w-1/2 sm:w-fit'>
@@ -208,7 +206,9 @@ const Username = ({ params }) => {
                                 name={pageform.name ? pageform.name : pageform.username}
                                 username={pageform.username}
                                 fuelCost={pageform.fuelCost}
-                                id={pageform.id} />
+                                id={pageform.id}
+                                loading={loading}
+                                setLoading={setLoading} />
                             <div>
 
 
