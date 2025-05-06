@@ -108,7 +108,12 @@ const AccountSetting = ({setActiveComponent}) => {
                 {active==="password" &&
                 <div className='p-10  bg-indigo-950/60 rounded-lg'>
                     <p className='text-sm'>*Setting password for first time?<Link className='underline' href={"/auth/forgotpassword"} > Click here</Link></p>
-                    <p className={`text-sm ${passwordform.oldPassword === passwordform.newPassword?"text-red-400":"text-white"}`}>*Old Password and New password cannot be same.</p>
+                    {passwordform.oldPassword !== passwordform.newPassword && passwordform.oldPassword && passwordform.newPassword &&
+                        <p className={`text-sm text-red-400`}>
+                        *Old Password and New password cannot be same.</p>
+                    }
+                    {/* <p className={`text-sm ${passwordform.oldPassword === passwordform.newPassword?"text-red-400":"text-white"}`}>
+                        *Old Password and New password cannot be same.</p> */}
                     
                     <label className='text-lg' htmlFor="oldPassword">Old Password</label>
                     <input onChange={handlePasswordChange} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg  ' placeholder='Old Password' type="password" name="oldPassword"/>
@@ -116,7 +121,7 @@ const AccountSetting = ({setActiveComponent}) => {
                     <input onChange={handlePasswordChange} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg  ' placeholder='New Password' type="password" name="newPassword"/>
                     <label className='text-lg' htmlFor="confirmPassword">Conifrm Password</label>
                     <input onChange={handlePasswordChange} className='mt-3 mb-5 w-full p-3 text-lg bg-gray-300 text-gray-700 rounded-lg  ' placeholder='Confirm Password' type="password" name="confirmPassword"/>
-                    {passwordform.confirmPassword !== passwordform.newPassword &&
+                    {passwordform.confirmPassword !== passwordform.newPassword && passwordform.newPassword && passwordform.confirmPassword &&
                     <p className='text-sm text-red-400'>Confirm Password not same as New Password.</p>}
                     <button disabled={!passwordform.oldPassword || !passwordform.newPassword || !passwordform.confirmPassword || passwordform.confirmPassword !== passwordform.newPassword} onClick={() => handleUpdate()} 
                     className="disabled:bg-zinc-500 text-black bg-amber-300 border hover:bg-amber-400  rounded-full px-5 py-3 w-full mx-2 my-5 font-semibold flex justify-center gap-2">
