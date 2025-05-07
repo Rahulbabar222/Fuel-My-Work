@@ -57,7 +57,7 @@ const Username = ({ params }) => {
             }
         };
         fetchIgniters();
-    }, [username,loading]);
+    }, [username, loading]);
 
     useEffect(() => {
         const recent = [...igniters]
@@ -84,17 +84,17 @@ const Username = ({ params }) => {
                                 className="object-cover w-full max-h-[400px]"
                                 src={pageform.coverImage}
                                 alt="Cover image"
-                                width={2000} 
-                                height={400} 
+                                width={2000}
+                                height={400}
                                 quality={100}
                             />
                         </div>
                         <div className='cover rounded-md  '>
                             <Image
-                            width={500} 
-                            height={500} 
-                            quality={100}
-                             className='object-cover border border-zinc-400 rounded-md w-[150px] h-[150px] -mt-[75px]' src={pageform.profileImage} alt="Profile Image" />
+                                width={500}
+                                height={500}
+                                quality={100}
+                                className='object-cover border border-zinc-400 rounded-md w-[150px] h-[150px] -mt-[75px]' src={pageform.profileImage} alt="Profile Image" />
                         </div>
                     </div>
                     <div className='w-full h-fit gap-2 flex flex-col items-center my-3'>
@@ -149,15 +149,25 @@ const Username = ({ params }) => {
                                     recentIgniters.map(igniter => (
                                         <li key={igniter.paidAt} className='flex items-center gap-3 mb-5'>
                                             <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
-                                                <Image 
-                                                width={500} 
-                                                height={500} 
-                                                quality={100}
-                                                className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                                <Image
+                                                    width={500}
+                                                    height={500}
+                                                    quality={100}
+                                                    className='object-cover rounded-full' src="/profile/default.png" alt="" />
                                             </div>
                                             <div className='w-full'>
-                                                <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount / pageform.fuelCost} boosts.</p>
+                                                <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount / igniter.fuelCost} boosts.</p>
                                                 {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
+                                                {igniter.comment && <div className='  p-2 mt-2 rounded-md flex gap-3'>
+                                                    <div className='min-w-[30px] min-h-[30px] max-w-[30px] max-h-[30px] cover rounded-full flex items-center'>
+                                                        <Image
+                                                            width={500}
+                                                            height={500}
+                                                            quality={100}
+                                                            className='object-cover rounded-full' src="/profile.png" alt="profile" />
+                                                    </div>
+                                                    <p> : {igniter.comment}</p>
+                                                </div>}
                                             </div>
                                         </li>
                                     ))) : (
@@ -182,15 +192,26 @@ const Username = ({ params }) => {
                                                     <li key={igniter.paidAt} className='flex items-center gap-3 mb-5'>
                                                         <div className='min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] cover rounded-full flex'>
                                                             <Image
-                                                            width={500} 
-                                                            height={500} 
-                                                            quality={100}
-                                                            className='object-cover rounded-full' src="/profile/default.png" alt="" />
+                                                                width={500}
+                                                                height={500}
+                                                                quality={100}
+                                                                className='object-cover rounded-full' src="/profile/default.png" alt="" />
                                                         </div>
                                                         <div className='w-full'>
-                                                            <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount / pageform.fuelCost} boosts.</p>
+                                                            <p><span className='font-bold'>{igniter.senderName}</span> fueled your work with {igniter.amount / igniter.fuelCost} boosts.</p>
                                                             {igniter.message && <p className='bg-white/80 text-black p-2 mt-2 rounded-md'>{igniter.message}</p>}
+                                                            {igniter.comment && <div className='  p-2 mt-2 rounded-md flex gap-3'>
+                                                                <div className='min-w-[30px] min-h-[30px] max-w-[30px] max-h-[30px] cover rounded-full flex items-center'>
+                                                                    <Image
+                                                                        width={500}
+                                                                        height={500}
+                                                                        quality={100}
+                                                                        className='object-cover rounded-full' src="/profile.png" alt="profile" />
+                                                                </div>
+                                                                <p> : {igniter.comment}</p>
+                                                            </div>}
                                                         </div>
+
                                                     </li>
                                                 ))}
                                         </ul>

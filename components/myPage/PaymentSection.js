@@ -81,7 +81,8 @@ const Payment = ({ name, username, fuelCost, id ,setLoading,loading}) => {
                         senderName: paymentform.senderName,
                         fromUsername: paymentform.fromUsername,
                         fromUseremail: paymentform.fromUseremail,
-                        message: paymentform.message
+                        message: paymentform.message,
+                        fuelCost:fuelCost
                     };
                     const verifyRes = await fetch("/api/razorpay/validate", {
                         method: "POST",

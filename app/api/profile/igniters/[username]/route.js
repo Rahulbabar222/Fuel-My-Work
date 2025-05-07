@@ -19,7 +19,7 @@ export const GET = async (req, {params}) => {
         const igniters = await SucessfulDonation.find(
             { toUserID: user._id },
             { senderName: 1, amount: 1,currency:1, message: 1,fromUsername:1,
-                fromUseremail:1, paidAt: 1, _id: 0 } 
+                fromUseremail:1, paidAt: 1, _id: 1,fuelCost:1,comment:1 } 
           );
          
           console.log(igniters)

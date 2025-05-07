@@ -5,7 +5,7 @@ export async function POST(req) {
     try {
         const body = await req.json();
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature, receipt, amount,currency,
-            toUser, toUserID,senderName,fromUsername,fromUseremail,message } = body;
+            toUser, toUserID,senderName,fromUsername,fromUseremail,message,fuelCost } = body;
         console.log(body)
 
         const sign = razorpay_order_id + "|" + razorpay_payment_id;
@@ -47,8 +47,10 @@ export async function POST(req) {
                 fromUseremail,
                 amount,
                 currency,
-                message
+                message,
+                fuelCost
             })
+            console.log(success)
             await success.save()
             return new Response(JSON.stringify({ success: true }), { status: 200 });
         } else {
