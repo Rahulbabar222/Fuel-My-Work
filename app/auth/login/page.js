@@ -77,7 +77,7 @@ const Loginpage = () => {
     return (
         <div className='flex justify-center items-center h-screen relative'>
             <ToastContainer/>
-            <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
+            <div className=' w-full sm:max-w-2/4 sm:min-w-2/4  lg:max-w-2/5 lg:min-w-2/5  flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
                 <Link href={"/"}><Image
                     width={70}
                     height={70}

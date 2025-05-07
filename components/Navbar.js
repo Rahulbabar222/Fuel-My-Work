@@ -29,6 +29,7 @@ const Navbar = () => {
                     <div className=' w-2/3 flex flex-col m-5 py-5 px-10 bg-indigo-900 rounded-xl relative'>
                         <Link onClick={() => setHamburger(false)} href={"#"} className='my-3'>FAQs</Link>
                         <Link onClick={() => setHamburger(false)} href={"#"} className='my-3'>Features</Link>
+                        <Link onClick={() => setHamburger(false)} href={"/creators"} className='my-3'>Creators</Link>
                         <Link onClick={() => setHamburger(false)} href={"#"} className='my-3'>iOS</Link>
                         <Link onClick={() => setHamburger(false)} href={"#"} className='my-3'>Andriod</Link>
                         <button onClick={() => setHamburger(false)} className='absolute top-5 right-5'>
@@ -45,6 +46,7 @@ const Navbar = () => {
                 <ul className='flex items-center'>
                     <Link href={"#"} className='px-3 font-semibold'>FAQs</Link>
                     <Link href={"#"} className='px-3 font-semibold'>Features</Link>
+                    <Link href={"/creators"} className='px-3 font-semibold'>Creators</Link>
                     <button onClick={() => setResourceDropdown(!resourceDropdown)} onBlur={() => setTimeout(() => setResourceDropdown(false), 100)} className=' relative px-3 font-semibold cursor-pointer' >Resources
                         <div className={`z-10 ${resourceDropdown ? "block" : "hidden"} absolute top-13 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700`}>
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
