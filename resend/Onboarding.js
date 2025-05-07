@@ -38,7 +38,8 @@ export const SendOnboardingEmail = async (to, username) => {
                 style="display: inline-block; margin-top: 20px; padding: 10px 20px; border: 1px solid #4f46e5; background-color: #ffffff; color: #4f46e5; text-decoration: none; border-radius: 5px;">
                 Click here to Login
             </a>
-
+            <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;" />
+        <h4 style="color: #333333 ">Cheers,<br>Team Fuel my work<br>Fuel Your Passion. Fund Your Work.<br>www.fuelmywork.space</h4>
             <p style="margin-top: 30px; font-size: 12px; color: #888888; text-align: center;">
                 If you have any questions or feedback, feel free to contact at dev.rahulx222@gamil.com
             </p>

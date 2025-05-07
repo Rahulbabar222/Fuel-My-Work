@@ -2,12 +2,12 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const LoginAlertEmail = async (to, username) => {
+export const DonationNotificationEmail = async (to, username,senderName,message,amount) => {
     try {
         const { data, error } = await resend.emails.send({
             from: 'Fuel my work <noreply@fuelmywork.space>',
             to,
-            subject: 'Login Alert - my work.',
+            subject: 'You’ve received a support on Fuel My Work!',
             html: `<!DOCTYPE html>
 <html>
   <body style="font-family: Arial, sans-serif; padding: 20px; margin: 0; background-color: #f9f9f9;">
@@ -15,19 +15,29 @@ export const LoginAlertEmail = async (to, username) => {
       <div style="background-color: #4f46e5; color: white; padding: 15px; text-align: center;">
         <img width="50" src="https://www.fuelmywork.space/logo.png" alt="Fuel My Work Logo" style="display: block; margin: auto;">
         <h2 style="margin: 10px 0;">Fuel My Work</h2>
-        <h3 style="margin: 10px 0 0 0;">Login Alert</h3>
+        <h3 style="margin: 10px 0 0 0;">You Received a Support!</h3>
       </div>
       <div style="padding: 20px; color: #333333; line-height: 1.6;">
         <p style="color: #333333">Hi ${username},</p>
         <p style="color: #333333">
-          We noticed a login to your <strong>Fuel My Work</strong> account.
+          Great news! You’ve received a new support on <strong>Fuel My Work</strong>.
         </p>
         <p style="color: #333333">
-          If this was you, no further action is needed. If you don’t recognize this login, please reset your password immediately.
+          <strong>Supporter:</strong> ${senderName}<br>
+          <strong>Amount:</strong> ₹${amount}<br>
+          <strong>Message:</strong><br>
+          <em>“${message}”</em>
         </p>
-        <a href="https://www.fuelmywork.space/auth/forgotpassword" 
-           style="display: inline-block; margin-top: 20px; padding: 10px 20px; border: 1px solid #4f46e5; background-color: #ffffff; color: #4f46e5; text-decoration: none; border-radius: 5px;">
-          Reset Password
+        <p style="color: #333333">
+            This contribution is a recognition of the hard work you put into your craft. Keep creating — your audience is noticing. 🔥
+          </p>
+          <p style="color: #333333">
+            You can view this and manage your supporter in your dashboard anytime.
+          </p>
+          <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;" />
+          <a href="https://www.fuelmywork.space/account/dashboard" 
+          style="display: inline-block; margin-top: 20px; padding: 10px 20px; border: 1px solid #4f46e5; background-color: #ffffff; color: #4f46e5; text-decoration: none; border-radius: 5px;">
+          View in Dashboard
         </a>
         <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;" />
         <h4 style="color: #333333 ">Cheers,<br>Team Fuel my work<br>Fuel Your Passion. Fund Your Work.<br>www.fuelmywork.space</h4>
@@ -47,7 +57,7 @@ export const LoginAlertEmail = async (to, username) => {
 
         return true;
     } catch (err) {
-        console.error('Send OTP Failed:', err);
+        console.error('Donation Notification Error:', err);
         return false;
     }
 };

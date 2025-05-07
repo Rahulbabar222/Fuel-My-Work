@@ -7,7 +7,7 @@ export const SendOtp = async (to,OTP_CODE) => {
         const { data, error } = await resend.emails.send({
             from: 'Fuel my work <noreply@fuelmywork.space>',
             to,
-            subject: 'Welcome to Fuel my work.',
+            subject: 'Forgot Password - OTP.',
             html: `<!DOCTYPE html>
 <html>
   <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
@@ -23,7 +23,8 @@ export const SendOtp = async (to,OTP_CODE) => {
         <p style="color: #333333">This OTP is valid for the next <strong>10 minutes</strong>.</p>
         <p style="color: #333333">If you didn’t request this, you can safely ignore this email.</p>
         <br />
-        <p style="color: #333333">— The Fuel My Work Team</p>
+        <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;" />
+        <h4 style="color: #333333 ">Cheers,<br>Team Fuel my work<br>Fuel Your Passion. Fund Your Work.<br>www.fuelmywork.space</h4>
         <p style="font-size: 12px; color: #888888; text-align: center; margin-top: 30px;">
           If you have any questions or feedback, feel free to contact at dev.rahulx222@gamil.com
         </p>

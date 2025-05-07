@@ -224,6 +224,7 @@ const Username = ({ params }) => {
                         </div>
                         <div className='w-full md:w-2/3 lg:w-1/3 h-fit m-5 rounded-lg' >
                             <Payment
+                                email={pageform.email}
                                 name={pageform.name ? pageform.name : pageform.username}
                                 username={pageform.username}
                                 fuelCost={pageform.fuelCost}

@@ -1,24 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useSession } from "next-auth/react"
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
-
-
-const Payment = ({ name, username, fuelCost, id ,setLoading,loading}) => {
-    const defaultPaymentForm =()=> ({
-        fuel: 1,
-        amount: 0,
-        senderName: "",
-        fromUsername: "Anonymous",
-        toUsername: username,
-        fromUseremail: "Anonymous",
-        message: "",
-        toUserID: id
-      });
-
-    const router=useRouter()
+const Payment = ({email, name, username, fuelCost, id ,setLoading,loading}) => {
     const { data: session } = useSession();
     const [paymentform, setPaymentform] = useState({
         fuel: 1,
@@ -75,6 +60,7 @@ const Payment = ({ name, username, fuelCost, id ,setLoading,loading}) => {
                         ...response,
                         receipt: orderData.receipt,
                         toUser: username,
+                        toEmail:email,
                         amount: (orderData.amount) / 100,
                         currency: orderData.currency,
                         toUserID: paymentform.toUserID,
