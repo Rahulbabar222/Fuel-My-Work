@@ -3,7 +3,7 @@ import React, { useState ,useEffect} from 'react'
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import Image from 'next/image'
 
 const Signuppage = () => {
@@ -77,6 +77,7 @@ const Signuppage = () => {
 
     return (
         <div className='flex justify-center items-center h-screen relative'>
+            <ToastContainer/>
             <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
                 <Link href={"/"}><Image
                 width={70} 

@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import Image from 'next/image'
 
 const Forgotpasswordpage = () => {
@@ -116,6 +116,7 @@ const Forgotpasswordpage = () => {
     return (
 
         <div className='flex justify-center items-center h-screen relative'>
+            <ToastContainer/>
             <div className=' w-full sm:max-w-1/4 sm:min-w-1/4 flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
                 <Link href={"/"}><Image
                     width={70}
