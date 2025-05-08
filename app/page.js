@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <div className="">
             <ToastContainer/>
-            <div className="flex flex-col justify-center items-center gap-5 p-5 m-5 sm:p-10 sm:m-10 bg-indigo-950/30 ">
+            <div className="flex flex-col justify-center items-center gap-5 p-5 m-5 sm:p-10 sm:m-10 ">
                 <h1 className="text-3xl font-bold">Fuel My Work</h1>
                 <p className="text-lg text-center">FuelMyWork is a creator support platform that enables individuals to receive direct contributions from audience</p>
                 {session ? (
