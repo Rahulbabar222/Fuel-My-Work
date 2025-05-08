@@ -65,15 +65,15 @@ const Creatorspage = () => {
                                             <span className='text-xs md:text-sm'>#{index + 1}</span>
                                             <div className='min-w-[50px] min-h-[50px] max-w-[50px] max-h-[50px] cover rounded-full flex'>
                                                 <Image
-                                                    src={creator.profileImage}
+                                                    src={creator.profileImage || "/profile.png"}
                                                     width={500}
                                                     height={500}
                                                     quality={100}
                                                     className='object-cover rounded-full' alt="profile" />
                                             </div>
                                             <div>
-                                                <p className='text-sm md:text-base'>{creator.name}</p>
-                                                <p className='text-xs md:text-sm text-zinc-700'>{creator.title}</p>
+                                                <p className='text-sm md:text-base'>{creator.name || creator.username}</p>
+                                                <p className='text-xs md:text-sm text-zinc-700'>{creator.title || "*Please setup your profile*"}</p>
                                             </div>
                                         </Link>
                                     </li>
