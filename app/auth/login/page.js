@@ -78,11 +78,13 @@ const Loginpage = () => {
         <div className='flex justify-center items-center h-screen relative'>
             <ToastContainer/>
             <div className=' w-full sm:max-w-2/4 sm:min-w-2/4  lg:max-w-2/5 lg:min-w-2/5  flex flex-col items-center gap-5 p-10 m-10 bg-indigo-950/30  '>
-                <Link href={"/"}><Image
+                <Link href={"/"}>
+                <Image
                     width={70}
                     height={70}
                     quality={100}
                     src="/logo.png" alt="Logo" /></Link>
+                 
                 <h1 className='text-3xl font-bold'>Welcome Back</h1>
                 <h2 className='text-2xl font-bold'>Log in</h2>
                 <input onChange={handleChange} type="email" name="email" value={loginform.email} placeholder='Email Address' className='px-2 py-2 bg-zinc-300 w-full rounded-md text-black' />
